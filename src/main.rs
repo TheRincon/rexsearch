@@ -19,7 +19,7 @@ TGAGCCTTGAGCGCTCGCCGCAGCTCCTGGGCCACTGCCTGCTGGTAACCCTCGCCCGGCACTACCCCGGAGACT
 TCAGCCCCGCGCTGCAGGCGTCGCTGGACAAGTTCCTGAGCCACGTTATCTCGGCGCTGGTTTCCGAGTACCGCT
 GAACTGTGGGTGGGTGGCCGCGGGATCCCCAGGCGACCTTCCCCGTGTTTGAGTAAAGCCTCTCCCAGGAGCAGC
 CTTCTTGCCGTGCTCTCTCGAGGTCAGGACGCGAGAGGAAGGCGC").replace("\n", "");
-    println!("teststring len is {:?}", test_string.chars().count());
+    // println!("teststring len is {:?}", test_string.chars().count());
     let y = dust::duster(&mut test_string, true);
     let gog = y.iter().cloned().collect::<String>();;
     println!("{:?}", gog);
