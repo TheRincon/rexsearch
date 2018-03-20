@@ -57,7 +57,7 @@ use std::string::String;
 pub fn get_abundance(header: &str) -> i64 {
         let size_pos = header.find("size=").unwrap_or(0 as usize); // look for "size=" in the header, return index of start
         if size_pos == 0 && header[0..].starts_with("size=") {
-                return header[(size_pos+5)..(size_pos+(header[size_pos..].find(";").unwrap_or(header[size_pos..].len())))].parse::<i64>().unwrap_or(1 as i64); // if "size=" was present but starts at index 0
+                return header[(size_pos + 5)..(size_pos + (header[size_pos..].find(";").unwrap_or(header[size_pos..].len())))].parse::<i64>().unwrap_or(1 as i64); // if "size=" was present but starts at index 0
         } else if size_pos == 0 {
                 return 0;           // if "size=" is not present abundance will be set to zero, IDK if this is right!
         } else {

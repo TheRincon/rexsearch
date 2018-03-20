@@ -25,4 +25,6 @@ CTTCTTGCCGTGCTCTCTCGAGGTCAGGACGCGAGAGGAAGGCGC").replace("\n", ""); */
     // let gog = y.iter().cloned().collect::<String>();
     let bob = tt.iter().cloned().collect::<String>();
     println!("{:?}", bob);
+    let r = abundance::get_abundance("sgjdhgkasgd;size=5734895707834588");
+    println!("{:?}", r);
 }
