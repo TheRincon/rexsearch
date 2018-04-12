@@ -82,13 +82,11 @@ pub fn dust(m: &mut [char], hardmask: bool) {
         if (v > DUST_LEVEL) {
             if hardmask {
                 for j in (a+i) as usize..(b + i + 1 ) as usize {
-                    m[j as usize] = 'N';
+                    m[j] = 'N';
                 }
             } else {
                 for j in (a + i)..(b + i + 1) {
-                    // let x = m[j as usize]; TODO
-                    // m[j as usize] = 'n';
-                    // m[j] = s[j] | 0x20;
+                    // match m[j]
                 }
             }
             if (b < DUST_WINDOW_2) { i += DUST_WINDOW_2 - b };
