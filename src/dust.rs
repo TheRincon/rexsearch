@@ -1,3 +1,6 @@
+
+
+
 const DUST_LEVEL: i32 = 20;  // original was 20
 const DUST_WORD: i32 = 3;
 const DUST_WINDOW: i32 = 64; // original is 64
@@ -8,7 +11,7 @@ static BIT_MASK: i32 = WORD_COUNT - 1;
 fn wo(len: i32, m: &mut [char], beg: &mut i32, end: &mut i32) -> i32 {
 
     let l1 = len - DUST_WORD + 1 - 5;
-    if (l1 < 0) { return 0 };
+    if l1 < 0 { return 0 };
     let chrmap = [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -46,7 +49,7 @@ fn wo(len: i32, m: &mut [char], beg: &mut i32, end: &mut i32) -> i32 {
             if c != 0 {
                 sum += c;
                 let mut v = 10 * sum / j;
-                if (v > bestv)
+                if v > bestv
                     {
                         bestv = v;
                         besti = i;
@@ -69,18 +72,18 @@ pub fn dust(m: &mut [char], hardmask: bool) {
     let (mut a, mut b) = (0,0);
     let mut s: Vec<char> = vec!['m'; len as usize];
     s.clone_from_slice(&m);
-    if (!hardmask) {
+    if !hardmask {
         /* convert sequence to upper case unless hardmask in effect */
-        for i in 0..len {
+        // for i in 0..len {
             // m[i] = toupper(m[i])
-        };
+        // };
         // m[len] = 0;  // what is this?
     }
     let mut i = 0;
     while i < len {
-        let mut l = if (len > i + DUST_WINDOW) { DUST_WINDOW } else { len-i };
-        let mut v = wo(l, &mut s[i as usize..], &mut a, &mut b);
-        if (v > DUST_LEVEL) {
+        let l = if len > i + DUST_WINDOW { DUST_WINDOW } else { len-i };
+        let v = wo(l, &mut s[i as usize..], &mut a, &mut b);
+        if v > DUST_LEVEL {
             if hardmask {
                 for j in (a+i) as usize..(b + i + 1 ) as usize {
                     m[j] = 'N';
@@ -96,7 +99,7 @@ pub fn dust(m: &mut [char], hardmask: bool) {
                     }
                 }
             }
-            if (b < DUST_WINDOW_2) { i += DUST_WINDOW_2 - b };
+            if b < DUST_WINDOW_2 { i += DUST_WINDOW_2 - b };
         }
         i += DUST_WINDOW_2;
     }
