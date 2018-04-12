@@ -87,9 +87,13 @@ pub fn dust(m: &mut [char], len: i32, hardmask: bool) {
                 }
             } else {
                 for j in (a + i)..(b + i + 1) {
-                    // let x = m[j as usize]; TODO
-                    // m[j as usize] = 'n';
-                    // m[j] = s[j] | 0x20;
+                    match m[j as usize] {
+                        'A' | 'a' => m[j as usize] = 'a',
+                        'C' | 'c' => m[j as usize] = 'c',
+                        'G' | 'g' => m[j as usize] = 'g',
+                        'T' | 't' => m[j as usize] = 't',
+                        _ => m[j as usize] = 'z'
+                    }
                 }
             }
             if (b < DUST_WINDOW_2) { i += DUST_WINDOW_2 - b };
