@@ -71,7 +71,8 @@ pub fn dust(m: &mut [char], hardmask: bool) {
     s.clone_from_slice(&m);
     if (!hardmask) {
         /* convert sequence to upper case unless hardmask in effect */
-        for i in 0..len { // m[i] = toupper(m[i])
+        for i in 0..len {
+            // m[i] = toupper(m[i])
         };
         // m[len] = 0;  // what is this?
     }
