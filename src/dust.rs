@@ -25,9 +25,8 @@ fn wo(len: i32, m: &mut [char], beg: &mut i32, end: &mut i32) -> i32 {
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0];
-    let mut bestv: i32 = 0;
-    let mut besti: i32 = 0;
-    let mut bestj: i32 = 0;
+
+    let (mut bestv, mut besti, mut bestj) = (0,0,0);
     let mut  words = [0; 64];
     let mut word: i32 = 0;
 
@@ -64,11 +63,11 @@ fn wo(len: i32, m: &mut [char], beg: &mut i32, end: &mut i32) -> i32 {
     return bestv;
 }
 
-pub fn dust(m: &mut [char], len: i32, hardmask: bool) {
+pub fn dust(m: &mut [char], hardmask: bool) {
 
-    let mut a: i32 = 0;
-    let mut b: i32 = 0;
-    let mut s = ['m'; 1020];
+    let len = m.len() as i32;
+    let (mut a, mut b) = (0,0);
+    let mut s: Vec<char> = vec!['m'; len as usize];
     s.clone_from_slice(&m);
     if (!hardmask) {
         /* convert sequence to upper case unless hardmask in effect */
@@ -83,7 +82,7 @@ pub fn dust(m: &mut [char], len: i32, hardmask: bool) {
         if (v > DUST_LEVEL) {
             if hardmask {
                 for j in (a+i) as usize..(b + i + 1 ) as usize {
-                    m[j as usize] = 'N';
+                    m[j] = 'N';
                 }
             } else {
                 for j in (a + i)..(b + i + 1) {
