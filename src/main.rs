@@ -54,6 +54,7 @@
 
 mod abundance;
 mod dust;
+mod window_masker;
 
 fn main() {
 
@@ -79,4 +80,7 @@ CTTCTTGCCGTGCTCTCTCGAGGTCAGGACGCGAGAGGAAGGCGC").replace("\n", "");
     let bob = testy.iter().cloned().collect::<String>();
     println!("{:?}", bob);
     abundance::get_abundance("size=2374820743897");
+    let k = vec![724789237, 234780897, 2923748907, 239374972394];
+    let z1 = window_masker::nmer_estimate(&k);
+    println!("{:?}", z1);
 }
