@@ -52,7 +52,7 @@
 */
 
 // use rsearch;
-use std::string::String;
+// use std::string::String;
 
 pub fn get_abundance(header: &str) -> i64 {
         let size_pos = header.find("size=").unwrap_or(0 as usize); // look for "size=" in the header, return index of start

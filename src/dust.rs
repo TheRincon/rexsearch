@@ -1,3 +1,5 @@
+
+
 const DUST_LEVEL: i32 = 20;  // original was 20
 const DUST_WORD: i32 = 3;
 const DUST_WINDOW: i32 = 64; // original is 64
@@ -6,9 +8,6 @@ const WORD_COUNT: i32 = 1 << ( DUST_WORD << 1 );
 static BIT_MASK: i32 = WORD_COUNT - 1;
 
 fn wo(len: i32, m: &mut [char], beg: &mut i32, end: &mut i32) -> i32 {
-
-    let l1 = len - DUST_WORD + 1 - 5;
-    if (l1 < 0) { return 0 };
     let chrmap = [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -25,6 +24,8 @@ fn wo(len: i32, m: &mut [char], beg: &mut i32, end: &mut i32) -> i32 {
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0];
+    let l1 = len - DUST_WORD + 1 - 5;
+    if l1 < 0 { return 0 };
     let mut bestv: i32 = 0;
     let mut besti: i32 = 0;
     let mut bestj: i32 = 0;
@@ -43,11 +44,11 @@ fn wo(len: i32, m: &mut [char], beg: &mut i32, end: &mut i32) -> i32 {
 
         for j in 2 .. len - i {
             word = words[i as usize + j as usize];
-            let mut c = counts[word as usize];
+            let c = counts[word as usize];
             if c != 0 {
                 sum += c;
-                let mut v = 10 * sum / j;
-                if (v > bestv)
+                let v = 10 * sum / j;
+                if v > bestv
                     {
                         bestv = v;
                         besti = i;
@@ -70,29 +71,35 @@ pub fn dust(m: &mut [char], len: i32, hardmask: bool) {
     let mut b: i32 = 0;
     let mut s = ['m'; 1020];
     s.clone_from_slice(&m);
-    if (!hardmask) {
+    if !hardmask {
         /* convert sequence to upper case unless hardmask in effect */
-        for i in 0..len { // m[i] = toupper(m[i])
-        };
+        //for i in 0..len { // m[i] = toupper(m[i])
+        //};
         // m[len] = 0;  // what is this?
     }
     let mut i = 0;
     while i < len {
-        let mut l = if (len > i + DUST_WINDOW) { DUST_WINDOW } else { len-i };
-        let mut v = wo(l, &mut s[i as usize..], &mut a, &mut b);
-        if (v > DUST_LEVEL) {
+        let l = if len > i + DUST_WINDOW { DUST_WINDOW } else { len-i };
+        let v = wo(l, &mut s[i as usize..], &mut a, &mut b);
+        if v > DUST_LEVEL {
             if hardmask {
                 for j in (a+i) as usize..(b + i + 1 ) as usize {
                     m[j as usize] = 'N';
                 }
             } else {
                 for j in (a + i)..(b + i + 1) {
-                    // let x = m[j as usize]; TODO
-                    // m[j as usize] = 'n';
-                    // m[j] = s[j] | 0x20;
+                    let x = m[j as usize];
+                    m[j as usize] = match x {
+                        'A' | 'a' => 'a',
+                        'T' | 't' => 't',
+                        'G' | 'g' => 'g',
+                        'C' | 'c' => 'c',
+                        'N' | 'n' => 'n',
+                        _ => panic!("malformed char in DNA seq passed to DUST")
+                    }
                 }
             }
-            if (b < DUST_WINDOW_2) { i += DUST_WINDOW_2 - b };
+            if b < DUST_WINDOW_2 { i += DUST_WINDOW_2 - b };
         }
         i += DUST_WINDOW_2;
     }
