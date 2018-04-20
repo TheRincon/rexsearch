@@ -30,7 +30,7 @@ fn wo(len: i32, m: &mut [char], beg: &mut i32, end: &mut i32) -> i32 {
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0];
 
     let (mut bestv, mut besti, mut bestj) = (0,0,0);
-    let mut  words = [0; 64];
+    let mut words = [0; 64];
     let mut word: i32 = 0;
 
     for j in 0..len {
