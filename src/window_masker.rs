@@ -1,6 +1,6 @@
-// pub fn window_masker(k: &[i64]) {
-//   let y = nmer_estimate(&k);
-//}
+pub fn window_masker(k: &[i64]) {
+  let y = nmer_estimate(&k);
+}
 
 pub fn nmer_estimate(lengths: &[i64]) -> i64 {
     let estimate_sum: i64 = lengths.iter().sum();
@@ -15,18 +15,19 @@ pub fn nmer_estimate(lengths: &[i64]) -> i64 {
     return 0;
 }
 
-/*pub fn get_len_contigs(contigs: &[str]) {
+pub fn get_len_contigs(contigs: &[&String]) -> i64 {
     let mut j = 0;
     for i in 0..contigs.len() {
         j += contigs[i].len();
     }
-    return j;
+    return j as i64;
 }
 
 pub fn nmer_scanner(contig: &str, nmer_len: i64) -> &str {
-    if nmer_len > contig.len() {
+    if nmer_len > contig.len() as i64 {
         return contig;
     }
-    // let nmer = []
-
-} */
+    let nmer = "";
+    let z: &str = "dsd";
+    z
+}

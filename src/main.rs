@@ -62,5 +62,5 @@ extern crate rand;
 
 fn main() {
 
-    fastx_utils::read_fasta("/home/danielw1234/Desktop/g.fasta".to_string());
+    fastx_utils::read_fasta("/home/danielw1234/Desktop/fastas/final.genome.fasta".to_string());
 }
