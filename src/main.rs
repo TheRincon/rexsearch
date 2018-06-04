@@ -50,7 +50,7 @@
   ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE.
 */
-
+extern crate rand;
 
 mod abundance;
 mod dust;
@@ -58,9 +58,6 @@ mod window_masker;
 mod shuffle;
 mod fastx_utils;
 
-extern crate rand;
-
 fn main() {
-
-    fastx_utils::read_fasta("/home/danielw1234/Desktop/fastas/final.genome.fasta".to_string());
+    fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
 }

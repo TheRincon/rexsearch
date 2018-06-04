@@ -54,7 +54,7 @@
 pub fn maps() {
 
     let sym_nt_2bit = vec!["A", "C", "G", "T"];
-    let sym_nt_4bit = vec!["-","A","C","G","T","R","Y","S","W","K", """"""""""""""]
+    let sym_nt_4bit = vec!["-","A","C","G","T","R","Y","S","W","K", """"""""""""""];
 
     let char_fasta_action =
         [
