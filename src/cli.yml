@@ -1,0 +1,58 @@
+name: rsearch
+version: "0.1"
+author: Daniel Whitfield <rinconrex@gmail.com>
+about: multi-purpose bioiformatics tool
+args:
+    - config:
+        short: c
+        long: config
+        value_name: FILE
+        help: Use a custom config file
+        takes_value: true
+    - fasta:
+        help: Input fasta to use
+        required: true
+        index: 1
+    - verbose:
+        short: v
+        multiple: true
+        help: Sets the level of verbosity
+subcommands:
+    - mask:
+        about: masks sequences of repeats
+        version: "0.1"
+        author: Daniel Whitfield <rinconrex@gmail.com>
+        args:
+            - dust:
+                short: d
+                help: use dust
+            - windowmasker:
+                short: w
+                help: Use windowmasker (ncbi toolkit)
+            - both:
+                short: b
+                help: Use both windowmasker and dust
+            - trf:
+                short: t
+                help: Use trf (tandem repeat finder) in progress
+            - all:
+                short: a
+                help: Use all maskers: windowmasker dust and trf
+            - fasta:
+                short: f
+                required: true
+
+
+    - align:
+        version: "0.1"
+        args:
+            - identity:
+                short: id
+                help: Set identity level
+    - filter:
+        version: "0.1"
+        args:
+            - hardmasked:
+                help: Filter all hardmasked records
+            - softmasked:
+                help: Filter all softmasked records

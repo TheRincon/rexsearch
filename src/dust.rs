@@ -1,6 +1,3 @@
-
-
-
 const DUST_LEVEL: i32 = 20;  // original was 20
 const DUST_WORD: i32 = 3;
 const DUST_WINDOW: i32 = 64; // original is 64

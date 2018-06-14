@@ -50,14 +50,27 @@
   ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE.
 */
+
 extern crate rand;
+extern crate bio;
+#[macro_use] extern crate clap;
+extern crate itertools;
 
 mod abundance;
 mod dust;
 mod window_masker;
 mod shuffle;
 mod fastx_utils;
+mod io;
+mod filter;
+
+use clap::{App, Arg, SubCommand};
+
 
 fn main() {
-    fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
+
+    // let yaml = load_yaml!("cli.yml");
+    // let matches = App::from_yaml(yaml).get_matches();
+    // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
+    fastx_utils::duster("/Users/daniel/Downloads/samp.fasta".to_string());
 }

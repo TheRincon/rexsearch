@@ -1,5 +1,14 @@
-use std::path::{Path, PathBuf};
+/*
+ * Inspired by Burntsushi in RipGrep
+ *
+ *
+ *
+ *
+ */
 
+
+
+use std::path::{Path, PathBuf};
 
 #[derive(Debug)]
 pub struct Args {
