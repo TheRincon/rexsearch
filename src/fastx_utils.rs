@@ -24,7 +24,7 @@ pub fn duster(file_path: String) {
 }
 
 pub fn dust_fasta(fasta: fasta::Reader<File>) -> fasta::Reader<File> {
-    let reader = fasta::Reader::from_file("/Users/daniel/Downloads/samp_new.fasta").unwrap();
+    let reader = fasta::Reader::from_file("/home/danielw1234/Desktop/samp.fasta").unwrap();
     for record in fasta.records() {
         let result = record.unwrap();
         let mut seq = result.seq();

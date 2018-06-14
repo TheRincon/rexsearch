@@ -72,5 +72,8 @@ fn main() {
     // let yaml = load_yaml!("cli.yml");
     // let matches = App::from_yaml(yaml).get_matches();
     // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
-    fastx_utils::duster("/Users/daniel/Downloads/samp.fasta".to_string());
+    // filter::filter_fasta();
+    // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
+    let k = vec!["hsajkldhajsh".to_string(), "hhsdfkjlshdfjhfsdfsdd".to_string()];
+    window_masker::window_masker(&k[..]);
 }
