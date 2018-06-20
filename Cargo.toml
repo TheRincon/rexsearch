@@ -6,5 +6,8 @@ authors = ["daniel-whitfield-spotcap <daniel.whitfield@spotcap.com>"]
 [dependencies]
 rand = "*"
 bio = "*"
+csv = "*"
 itertools = "*"
+serde = "*"
+serde_derive = "*"
 clap = { version = "2.31", features = ["yaml"] }

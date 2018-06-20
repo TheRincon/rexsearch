@@ -3,24 +3,24 @@ use bio::alphabets::dna;
 use std::str;
 
 pub fn window_masker(k: &[String]) {
+
     let nmer_len = nmer_estimate(get_len_contigs(k));
-    // let mut placeholder = String::from("");
-    // for i in 0..nmer_len {
-        // placeholder.push_str("a");
-    // }
-    let d = k.into_iter().next().unwrap().as_bytes();
-    let v = dna::revcomp(d);
-    let y = str::from_utf8(&v).unwrap();
     let mut kmer_map = HashMap::new();
-    for i in 0..k.len() {
-        nmer_scanner(&k[i], nmer_len, &mut kmer_map);
-        rev_nmer_scanner(y, nmer_len, &mut  kmer_map);
+    for i in k {
+        nmer_scanner(i, nmer_len, &mut kmer_map);
+        let mut rev = rev(i);
+        rev_nmer_scanner(rev, nmer_len, &mut  kmer_map);
     }
+}
+
+pub fn rev(i: &String) -> &str {
+    let x = dna::revcomp(i.as_bytes());
+    return str::from_utf8(&x.to_owned()).unwrap();
 }
 
 // 100 billion is around 18 so it better be huge to get 50 --> L/(4^K) < 5
 // Taken from WindowMasker Docs:
-//  https://academic.oup.com/bioinformatics/article/22/2/134/424703
+// https://academic.oup.com/bioinformatics/article/22/2/134/424703
 
 pub fn nmer_estimate(estimate_sum: i64) -> i64 {
     for i in 1..1_000 {
@@ -51,9 +51,9 @@ pub fn rev_nmer_scanner<'a>(rev_contig: &'a str, nmer_len: i64, hash_map: &mut H
     // return vec![contig];
     // }
     for i in 0..rev_contig.len() - nmer_len as usize + 1 {
+        println!("{:?}", &rev_contig[i..(i + nmer_len as usize)]);
         let kmer_count = hash_map.entry(& rev_contig[i..(i + nmer_len as usize)]).or_insert(0);
         *kmer_count += 1;
-        println!("{:?}", *kmer_count);
     }
 }
 
@@ -66,7 +66,6 @@ pub fn nmer_scanner<'a>(contig: &'a str, nmer_len: i64, hash_map: &mut HashMap<&
     for i in 0..contig.len() - nmer_len as usize + 1 {
         let kmer_count = hash_map.entry(& contig[i..(i + nmer_len as usize)]).or_insert(0);
         *kmer_count += 1;
-        println!("{:?}", *kmer_count);
     }
 }
 

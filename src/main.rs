@@ -55,14 +55,17 @@ extern crate rand;
 extern crate bio;
 #[macro_use] extern crate clap;
 extern crate itertools;
+extern crate csv;
+#[macro_use] extern crate serde_derive;
+extern crate serde;
 
-mod abundance;
-mod dust;
-mod window_masker;
-mod shuffle;
-mod fastx_utils;
-mod io;
-mod filter;
+pub mod abundance;
+pub mod dust;
+pub mod window_masker;
+pub mod shuffle;
+pub mod fastx_utils;
+pub mod io;
+pub mod filter;
 
 use clap::{App, Arg, SubCommand};
 
@@ -74,6 +77,6 @@ fn main() {
     // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
     // filter::filter_fasta();
     // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
-    let k = vec!["ATTTAGAGAGACGCGCGAGAGAGAGAGACGCGC".to_string(), "ATTATTATTAGACACCAGGAGATTACACACACACACA".to_string()];
+    let k = vec!["ATTTAGAGAGACGCGCGAGAGAGAGAGACGCGC".to_string(), "ATTATTATTAGACACCAGGAGATTACACACACACACA".to_string(), "KKKKKKKKKKKKKK".to_string()];
     window_masker::window_masker(&k[..]);
 }
