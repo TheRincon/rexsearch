@@ -1,13 +1,20 @@
 use std::collections::HashMap;
+use bio::alphabets::dna;
+use std::str;
 
 pub fn window_masker(k: &[String]) {
     let nmer_len = nmer_estimate(get_len_contigs(k));
-    let mut placeholder = String::from("");
-    for i in 0..nmer_len {
-        placeholder.push_str("a");
-    }
+    // let mut placeholder = String::from("");
+    // for i in 0..nmer_len {
+        // placeholder.push_str("a");
+    // }
+    let d = k.into_iter().next().unwrap().as_bytes();
+    let v = dna::revcomp(d);
+    let y = str::from_utf8(&v).unwrap();
+    let mut kmer_map = HashMap::new();
     for i in 0..k.len() {
-        nmer_scanner(&k[i], nmer_len);
+        nmer_scanner(&k[i], nmer_len, &mut kmer_map);
+        rev_nmer_scanner(y, nmer_len, &mut  kmer_map);
     }
 }
 
@@ -38,18 +45,29 @@ pub fn get_len_contigs(contigs: &[String]) -> i64 {
     return j as i64;
 }
 
-pub fn nmer_scanner(contig: &str, nmer_len: i64) -> Vec<&str> {
+pub fn rev_nmer_scanner<'a>(rev_contig: &'a str, nmer_len: i64, hash_map: &mut HashMap<&'a str, u64>) {
 
-    if nmer_len > contig.len() as i64 {
-        return vec![contig];
-    }
-    // let mut nmers: Vec<&str> = vec!["fives"; contig.len()];
-    let mut kmer_map = HashMap::new();
-    for i in 0..contig.len() - nmer_len as usize + 1 {
-        let kmer_count = kmer_map.entry(&contig[i..(i + nmer_len as usize)]).or_insert(0);
+    // if nmer_len > contig.len() as i64 {
+    // return vec![contig];
+    // }
+    for i in 0..rev_contig.len() - nmer_len as usize + 1 {
+        let kmer_count = hash_map.entry(& rev_contig[i..(i + nmer_len as usize)]).or_insert(0);
         *kmer_count += 1;
+        println!("{:?}", *kmer_count);
     }
-    vec!["sgd"]
+}
+
+
+pub fn nmer_scanner<'a>(contig: &'a str, nmer_len: i64, hash_map: &mut HashMap<&'a str, u64>) {
+
+    // if nmer_len > contig.len() as i64 {
+        // return vec![contig];
+    // }
+    for i in 0..contig.len() - nmer_len as usize + 1 {
+        let kmer_count = hash_map.entry(& contig[i..(i + nmer_len as usize)]).or_insert(0);
+        *kmer_count += 1;
+        println!("{:?}", *kmer_count);
+    }
 }
 
 

@@ -74,6 +74,6 @@ fn main() {
     // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
     // filter::filter_fasta();
     // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
-    let k = vec!["hsajkldhajshhsajkldhajshhjjashahshlkhsjdsakldhjashjshdjashdkljhasjkdlhhjklhjklhjkl".to_string(), "mxmcmxmcmxmcmmxmxmxmx".to_string()];
+    let k = vec!["ATTTAGAGAGACGCGCGAGAGAGAGAGACGCGC".to_string(), "ATTATTATTAGACACCAGGAGATTACACACACACACA".to_string()];
     window_masker::window_masker(&k[..]);
 }
