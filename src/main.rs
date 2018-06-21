@@ -66,6 +66,7 @@ pub mod shuffle;
 pub mod fastx_utils;
 pub mod io;
 pub mod filter;
+pub mod dna_utils;
 
 use clap::{App, Arg, SubCommand};
 

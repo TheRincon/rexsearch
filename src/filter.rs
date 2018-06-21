@@ -6,13 +6,10 @@ use io::fastq;
 
 pub fn filter_fasta() {
     let reader = fasta::Reader::from_file("/home/danielw1234/Desktop/samp.fasta").unwrap();
-    for mut result in reader.records() {
-        // obtain record or fail with error
-        let mut record = result.unwrap();
-        // obtain sequence
-        let mut seq = record.seq();
-        if seq.contains(&('N' as u8)) {
-            //record.clear();
+    for (i, mut result) in enumerate(reader.records()) {
+        let mut rec = result.unwrap();
+        if rec.seq().contains(&('N' as u8)) {
+            rec.clear();
         }
     }
 }
