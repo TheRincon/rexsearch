@@ -58,8 +58,8 @@ pub fn nmer_scanner<'a>(contig: &'a str, rev_contig: &'a str, nmer_len: i64, has
 }
 
 pub fn get_thresholds(hashmap: &HashMap<&str, i64>) {
+
     let v: i64 = hashmap.values().into_iter().sum();
-    println!("{:?}", v);
     let size = hashmap.keys().len();
     // CDF here, need 99.8, 99.5, 99.0, 90.0 for T_High, T_Thresh, T_Extend, and T_Low respectively.
 }
