@@ -1,9 +1,7 @@
 use std::collections::HashMap;
-use bio::alphabets::dna;
 use std::str;
 use itertools::enumerate;
 use dna_utils;
-use bio::stats::probs::cdf;
 
 pub fn window_masker(k: &[String]) {
     let mut rev_vec = Vec::new();
@@ -50,18 +48,43 @@ pub fn get_len_contigs(contigs: &[String]) -> i64 {
 }
 
 pub fn nmer_scanner<'a>(contig: &'a str, rev_contig: &'a str, nmer_len: i64, hash_map: &mut HashMap<&'a str, i64>) {
-
+    if contig.len() < nmer_len as usize {
+        return;
+    }
     for i in 0..contig.len() - nmer_len as usize + 1 {
-        hash_map.entry(& contig[i..(i + nmer_len as usize)]).and_modify(|e| { *e += 1 }).or_insert(0);
-        hash_map.entry(& rev_contig[i..(i + nmer_len as usize)]).and_modify(|x| { *x += 1 }).or_insert(0);
+        // ugly
+        hash_map.entry(& contig[i..(i + nmer_len as usize)]).and_modify(|e| { *e += 1 }).or_insert(1);
+        hash_map.entry(& rev_contig[i..(i + nmer_len as usize)]).and_modify(|x| { *x += 1 }).or_insert(1);
     }
 }
 
+pub fn kmer_std_dev(u: i64, size: i64, hashmap: &HashMap<&str, i64>) -> i64 {
+    // println!("{:?}", u);
+    let stdd: i64 = hashmap.values().into_iter().map(|&x| (x - u) * (x - u)).sum();
+    let y = ((stdd / size - 1) as f64).sqrt() as i64;
+    y
+}
+
+
 pub fn get_thresholds(hashmap: &HashMap<&str, i64>) {
 
-    let v: i64 = hashmap.values().into_iter().sum();
-    let size = hashmap.keys().len();
+    // get sum of all kmers, again this could be calculated before hand I guess.
+    // maybe just a check to see if we missed any?
+    let p: i64 = hashmap.values().into_iter().sum();
+
+    // this needs to be here, because unlike above, we can't know which kmers are represented
+    let size = hashmap.keys().len() as i64;
+
+    kmer_std_dev(p / size, size, hashmap);
+
+    // 3 sigma is around 99.9%
+    // 2.575829 sigma is 99.5%
+    // 2.33 sigma is ~99.0%
+    // 1.644854 sigma is 90.0%
     // CDF here, need 99.8, 99.5, 99.0, 90.0 for T_High, T_Thresh, T_Extend, and T_Low respectively.
+
+    // Bessel's correction of the kmer count
+
 }
 
 // Even when the genome is 100 Billion the "K" should never exceed ~18 --> L/(4^K) < 5

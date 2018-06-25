@@ -1,14 +1,12 @@
 
-/*
-use rand::{thread_rng, Rng, seq};
+use rand::{thread_rng, Rng, sample};
 
-pub fn shuffle(deck: &mut [&str]) {
+pub fn shuffler(deck: &mut [&str]) {
     let mut rng = thread_rng();
-    rng.shuffle(deck);
+    rng.shuffle( deck);
 }
 
-pub fn sub_sample(deck: &[String]) {
+pub fn sub_sample(deck: &[String], num: usize) {
     let mut rng = thread_rng();
-    let mut sample: Vec<String> = seq::sample_iter(&mut rng, deck.iter(), 1).unwrap().clone();
+    let sample = sample(&mut rng, deck, num);
 }
-*/

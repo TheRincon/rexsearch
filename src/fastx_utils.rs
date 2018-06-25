@@ -44,6 +44,7 @@ pub fn dust_fastq(fastq: fastq::Reader<File>) -> fastq::Reader<File> {
 }
 
 
+/*
 fn parse_ffn(filee: BufReader<File>) {
     let mut rec_vec: Vec<char> = Vec::new();
     for line in filee.lines() {
@@ -59,6 +60,7 @@ fn parse_ffn(filee: BufReader<File>) {
         }
     }
 }
+*/
 
 // write regex to find   =>   ".fasta" || ".fsa" || ".fna" || ".ffn" || ".frn" || "fa" || ".fas" || ".seq"
 // then find it and return index

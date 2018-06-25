@@ -58,6 +58,7 @@ extern crate itertools;
 extern crate csv;
 #[macro_use] extern crate serde_derive;
 extern crate serde;
+extern crate statrs;
 
 pub mod abundance;
 pub mod dust;
@@ -78,7 +79,7 @@ fn main() {
     // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
     // filter::filter_fasta();
     // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
-    let k = vec!["ATTTAGAGAGACGCGCGAGAGAGAGAGACGCGC".to_string(),"ATTATTATTAGACACCAGGAGATTACACACACACACA".to_string(),"KKKKKKKKKKKKKK".to_string()];
+    let k = vec!["AAGAGAGACGCGCGAGAGAGAGTTAGGAGGAGATTATTTAGGAGGAGAAGACGCGC".to_string(),"ATTATTATTAGACATATTAGACCACACCACGGCGCTCGCGTATAGCTTAACCAGGAGATTACACACACACACA".to_string(),"AATGTGG".to_string()];
     window_masker::window_masker(&k[..]);
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
