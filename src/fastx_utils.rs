@@ -85,6 +85,13 @@ pub fn create_new_fastx(file_path: String) -> File {
     File::create(new_file_path).expect("Can't create new file here")
 }
 
+pub fn create_new_file_path(file_path: String) -> String {
+    let ending = file_path.find(".fasta");  // ".fasta" || ".fsa" || ".fna" || ".ffn" || ".frn" || "fa" || ".fas" || ".seq" || ".mpfa" || ".faa"
+    let mut new_file_path = file_path[..ending.unwrap()].to_string();
+    new_file_path.push_str("_new.fasta");
+    new_file_path
+}
+
 pub fn write_fasta_new(name: String) {
     let f_path = name.to_owned();
     let f = create_new_fastx(name);
