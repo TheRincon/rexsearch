@@ -10,3 +10,8 @@ pub fn compare(x: hit, y: hit) -> i64 {
 
     }
 }
+
+struct hit {
+    id: i64,
+    target: i64
+}

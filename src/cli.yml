@@ -41,18 +41,57 @@ subcommands:
             - fasta:
                 short: f
                 required: true
-
-
     - align:
+        about: Aligns sequences
         version: "0.1"
         args:
             - identity:
                 short: id
                 help: Set identity level
     - filter:
+        help: hardmasked | softmasked | both | maxlength | minlength
         version: "0.1"
         args:
             - hardmasked:
                 help: Filter all hardmasked records
             - softmasked:
                 help: Filter all softmasked records
+            - both:
+                help: Filter both soft- and hardmasked records
+            - maxlength:
+                takes_value: true
+                help: Filter by maximum length of sequence
+            - minlength:
+                takes_value: true
+                help: Minimum length
+
+    - cluster:
+        version: "0.1"
+        args:
+            - length:
+            - abundance:
+            -
+
+    - chimera:
+        version: "0.1"
+        args:
+            -
+
+    - sort:
+        about:
+        version: "0.1"
+
+    - shuffle:
+        version: "0.1"
+
+    - subsample:
+        version: "0.1"
+
+    - search:
+        version: "0.1"
+
+    - revcomp:
+        version: "0.1"
+        help: Get the reverse complements of the sequences
+
+    -

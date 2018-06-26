@@ -1,7 +1,7 @@
 [package]
 name = "rsearch"
 version = "0.1.0"
-authors = ["daniel-whitfield-spotcap <daniel.whitfield@spotcap.com>"]
+authors = ["RinconRex <rinconrex@gmail.com>"]
 
 [dependencies]
 rand = "*"

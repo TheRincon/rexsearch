@@ -33,7 +33,7 @@ pub fn dust_fasta(fasta: fasta::Reader<File>) -> fasta::Reader<File> {
 }
 
 pub fn dust_fastq(fastq: fastq::Reader<File>) -> fastq::Reader<File> {
-    let reader = fastq::Reader::from_file("/Users/daniel/Downloads/SP1.fq").unwrap();
+    let reader = fastq::Reader::from_file("/Users/daniel/Downloads/SP1.fq").expect("Could not open FASTQ for DUST");
     for record in fastq.records() {
         let result = record.unwrap();
         let mut seq = result.seq();
@@ -80,14 +80,14 @@ fn parse_ffn(filee: BufReader<File>) {
 pub fn create_new_fastx(file_path: String) -> File {
 
     let ending = file_path.find(".fasta");  // ".fasta" || ".fsa" || ".fna" || ".ffn" || ".frn" || "fa" || ".fas" || ".seq" || ".mpfa" || ".faa"
-    let mut new_file_path = file_path[..ending.unwrap()].to_string();
+    let mut new_file_path = file_path[..ending.expect("Could not find file ending of .fasta")].to_string();
     new_file_path.push_str("_new.fasta");
     File::create(new_file_path).expect("Can't create new file here")
 }
 
 pub fn create_new_file_path(file_path: String) -> String {
     let ending = file_path.find(".fasta");  // ".fasta" || ".fsa" || ".fna" || ".ffn" || ".frn" || "fa" || ".fas" || ".seq" || ".mpfa" || ".faa"
-    let mut new_file_path = file_path[..ending.unwrap()].to_string();
+    let mut new_file_path = file_path[..ending.expect("Could not find file ending of .fasta")].to_string();
     new_file_path.push_str("_new.fasta");
     new_file_path
 }
