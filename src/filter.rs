@@ -3,22 +3,26 @@
 use itertools::enumerate;
 use io::fasta;
 use io::fastq;
+use fastx_utils;
 
-pub fn filter_fasta() {
-    let reader = fasta::Reader::from_file("/home/danielw1234/Desktop/samp.fasta").unwrap();
+pub fn filter_fasta(file_path: &str) {
+    let reader = fasta::Reader::from_file(file_path).unwrap();
+    let mut writer = fasta::Writer::to_file("/Users/daniel/Desktop/file.fasta").unwrap();
     for (i, mut result) in enumerate(reader.records()) {
         let mut rec = result.unwrap();
-        if rec.seq().contains(&('N' as u8)) {
-            rec.clear();
+        if rec.seq().contains(&('N' as u8)) || rec.seq().contains(&('n' as u8)) {
+            continue
+        } else {
+            writer.write_record(&rec);
         }
     }
 }
 
-pub fn filter_fastq() {
-    let reader = fastq::Reader::from_file("reads.fastq").unwrap();
+pub fn filter_fastq(file_path: &str) {
+    let reader = fastq::Reader::from_file(file_path).unwrap();
     for (i, mut result) in enumerate(reader.records()) {
         let mut rec = result.unwrap();
-        if rec.seq().contains(&('N' as u8)) {
+        if rec.seq().contains(&('N' as u8)) || rec.seq().contains(&('n' as u8)) {
            rec.clear();
         }
     }

@@ -8,7 +8,6 @@ use std::io::{BufWriter, BufReader};
 use std::fs::File;
 use std::io::BufRead;
 use std::io::Write;
-use std::borrow::Cow;
 
 // local imports
 use dust;
