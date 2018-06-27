@@ -70,19 +70,30 @@ pub mod filter;
 pub mod dna_utils;
 
 use clap::{App, Arg, SubCommand};
-
+use io::fasta;
+use itertools::enumerate;
 
 fn main() {
 
     // let yaml = load_yaml!("cli.yml");
     // let matches = App::from_yaml(yaml).get_matches();
     // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
-    filter::filter_fasta_n("/Users/daniel/Desktop/samp.fasta");
+    // filter::filter_fasta_n("/Users/daniel/Desktop/samp.fasta");
     // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
-    let k = vec!["AAGAGAGACGCGCGAGAGAGAGTTAGGAGGAGATTATTTAGGAGGAGAAGACGCGC".to_string(),"ATTATTATTAGACATATTAGACCACACCACGGCGCTCGCGTATAGCTTAACCAGGAGATTACACACACACACA".to_string(),"AATGTGG".to_string()];
+    let k = collect_seqs("/Users/daniel/Desktop/samp.fasta");
     window_masker::window_masker(&k[..]);
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
     // println!("{:?}", c);
 
+}
+
+pub fn collect_seqs(file_path: &str) -> Vec<String> {
+    let reader = fasta::Reader::from_file(file_path.to_string()).unwrap();
+    let mut string_vec = Vec::new();
+    for (i, mut result) in enumerate(reader.records()) {
+        let mut rec = result.unwrap();
+        string_vec.push(rec.seq_string())
+    }
+    string_vec
 }

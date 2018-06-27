@@ -31,10 +31,13 @@ pub fn filter_fastq_n(file_path: &str) {
 // v.iter().filter(|&n| *n == 91).count()
 pub fn filter_fastq_count_n(file_path: &str, num: usize) {
     let reader = fastq::Reader::from_file(file_path).unwrap();
+    let mut writer = fastq::Writer::to_file(fastx_utils::create_new_file_path(file_path.to_string())).unwrap();
     for (i, mut result) in enumerate(reader.records()) {
         let mut rec = result.unwrap();
         if rec.seq().iter().filter(|&n| *n == 'N' as u8).count() > num {
-            rec.clear();
+            continue
+        } else {
+            writer.write_record(&rec);
         }
     }
 }
@@ -99,7 +102,7 @@ pub fn filter_fastq_min_quality(file_path: &str, qual: i64) {
     let mut writer = fastq::Writer::to_file(fastx_utils::create_new_file_path(file_path.to_string())).unwrap();
     for (i, mut result) in enumerate(reader.records()) {
         let mut rec = result.unwrap();
-        if rec.seq().len() < 1 {
+        if rec.qual().len() < 1 {
             continue
         } else {
             writer.write_record(&rec);

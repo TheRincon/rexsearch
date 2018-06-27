@@ -622,6 +622,9 @@ impl Record {
         self.seq.as_bytes()
     }
 
+    /// Return the string sequence of the record
+    pub fn seq_string(&self) -> String { self.seq.to_owned() }
+
     /// Clear the record.
     pub fn clear(&mut self) {
         self.id.clear();
