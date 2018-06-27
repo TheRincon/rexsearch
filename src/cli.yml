@@ -21,7 +21,6 @@ subcommands:
     - mask:
         about: masks sequences of repeats
         version: "0.1"
-        author: Daniel Whitfield <rinconrex@gmail.com>
         args:
             - dust:
                 short: d
@@ -35,12 +34,17 @@ subcommands:
             - trf:
                 short: t
                 help: Use trf (tandem repeat finder) in progress
+            - piler:
+                short: p
+                help: Use PILER from RC Edgar
             - all:
                 short: a
                 help: Use all maskers: windowmasker dust and trf
             - fasta:
                 short: f
                 required: true
+            - fastq:
+                short: q
     - align:
         about: Aligns sequences
         version: "0.1"
