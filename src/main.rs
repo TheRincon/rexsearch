@@ -89,6 +89,7 @@ fn main() {
 }
 
 pub fn collect_seqs(file_path: &str) -> Vec<String> {
+
     let reader = fasta::Reader::from_file(file_path.to_string()).unwrap();
     let mut string_vec = Vec::new();
     for (i, mut result) in enumerate(reader.records()) {

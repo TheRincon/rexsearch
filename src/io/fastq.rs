@@ -202,6 +202,9 @@ impl Record {
         self.seq.trim_right().as_bytes()
     }
 
+    /// Return the sequence string of the record.
+    pub fn seq_string(&self) -> String { self.seq.to_owned() }
+
     /// Return the base qualities of the record.
     pub fn qual(&self) -> &[u8] {
         self.qual.trim_right().as_bytes()
