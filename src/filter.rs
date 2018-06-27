@@ -93,7 +93,6 @@ pub fn filter_fastq_max_quality(file_path: &str, qual: i64) {
     }
 }
 
-
 // todo change back to quality
 pub fn filter_fastq_min_quality(file_path: &str, qual: i64) {
     let reader = fastq::Reader::from_file(file_path).unwrap();
