@@ -20,7 +20,12 @@ pub fn wm(k: &[String], rev_vec: &[String]) {
     for (i,s) in enumerate(k) {
             nmer_scanner(s, &rev_vec[i], nmer_len, &mut kmer_map);
     }
-    get_thresholds(&kmer_map);
+    let mut r = kmer_map.into_iter();
+    let c  = r.len();
+    for i in 0..c {
+        println!("{:?}", r.next().unwrap());
+    }
+    // get_thresholds(&kmer_map);
 }
 
 // 100 billion is around 18 so it better be huge to get 50 --> L/(4^K) < 5
@@ -29,12 +34,12 @@ pub fn wm(k: &[String], rev_vec: &[String]) {
 
 pub fn nmer_estimate(estimate_sum: i64) -> i64 {
 
-    for i in 1..50 {
+    for i in 1..40 {
         if estimate_sum / ( 4_i64.pow(i as u32)) < 5 {
             if i < 2 { return 2 }
             return i as i64;
         }
-        if i == 50 {
+        if i == 40 {
             panic!("No nmer found for contigs length");
         }
     }
