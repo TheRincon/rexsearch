@@ -1,12 +1,22 @@
 # rsearch
 Port of vsearch into Rust
 
-Rewriting vsearch with protein comparison and FOGSAA. I have a few ideas how to use this for annotation and other projects. Such as "overhang" extension. I need to a tool to try to fill in gaps in assemblies from PacBio to Illumina. My Illumina reads always drop coverage in HiSeq and I would like to "fill-in" these gaps by returning partial alignments and long overhangs. Many tools already do something similar, but not quite the way I wish to use it though. 
+Rewriting vsearch with protein comparison and FOGSAA. I have a few ideas how to use this for annotation and other projects. Such as "overhang" extension. I need to a tool to try to fill in gaps in assemblies from PacBio to Illumina. My Illumina reads always drop coverage in HiSeq and I would like to "fill-in" these gaps by returning partial alignments and long overhangs. Many tools already do something similar, but not quite the way I wish to use it though. Still getting to the point of the original intent. Now I am alo thinking about making several smaller tools. 
 
-Right now, most of my thought is how to best read and write fastas. Rust Bio is ok, but the interface is wonky. Don't know how to erase records either (for filter). 
+Candidate tools:
 
-DUST is now working WindowMasker is almost done. TRF maybe, and something specific for Fungi (OcculterCut?). 
+rfilter      fast filtering
+rsearch      for sequnce matches
+rsort        sort by length and bundance
+rsample      subsample and shuffle reads
+ralign       alignment and splicing tools 
 
-Of course, the licensing applies from vsearch. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes). 
+Don't need to erase records, just skip when writing them according to a predicate. Also added a mthod for returning the string, not just as_bytes. Will also be moving DUST and WM to methods as well. 
+
+Filter of Quality scores is what I need to focus on now. Should be simple if I can use 12u8 or similar (which it looks like I can).
+
+TRF maybe, and something specific for Fungi (OcculterCut?). 
+
+Of course, the licensing applies from vsearch. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes), also took some code from rust::bio. Same applies, all credit to Johannes. 
 
 
