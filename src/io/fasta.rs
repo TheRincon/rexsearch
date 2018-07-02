@@ -42,6 +42,8 @@ use std::io;
 use std::io::prelude::*;
 use std::path::Path;
 
+use dust::dust;
+
 use csv;
 
 use bio::utils::{Text, TextSlice};
@@ -619,11 +621,15 @@ impl Record {
 
     /// Return the sequence of the record.
     pub fn seq(&self) -> TextSlice {
-        self.seq.as_bytes()
+            self.seq.as_bytes()
+    }
+
+    pub fn update_seq(&mut self, new: &str) {
+        self.seq = new.to_string();
     }
 
     /// Return the string sequence of the record
-    pub fn seq_string(&self) -> String { self.seq.to_owned() }
+    pub fn seq_string(&mut self) -> String { self.seq.as_mut_str().to_owned() }
 
     /// Clear the record.
     pub fn clear(&mut self) {
@@ -631,6 +637,7 @@ impl Record {
         self.desc = None;
         self.seq.clear();
     }
+
 }
 
 /// An iterator over the records of a Fasta file.

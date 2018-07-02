@@ -83,21 +83,37 @@ fn main() {
     // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
     // filter::filter_fasta_n("/Users/daniel/Desktop/samp.fasta");
     // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
-    let k = collect_seqs(&args[1]);
-    window_masker::window_masker(&k[..]);
+    // let k = collect_strings(&args[1]);
+    //window_masker::window_masker(&k[..]);
+    collect_seqs("/Users/daniel/Desktop/samp2.fasta");
+
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
     // println!("{:?}", c);
 
 }
 
-pub fn collect_seqs(file_path: &str) -> Vec<String> {
+pub fn collect_strings(file_path: &str) -> Vec<String> {
 
     let reader = fasta::Reader::from_file(file_path.to_string()).unwrap();
     let mut string_vec = Vec::new();
     for (i, mut result) in enumerate(reader.records()) {
         let mut rec = result.unwrap();
+
         string_vec.push(rec.seq_string())
     }
     string_vec
+}
+
+pub fn collect_seqs(file_path: &str) {
+
+    let reader = fasta::Reader::from_file(file_path.to_string()).unwrap();
+    let mut writer = fasta::Writer::to_file(fastx_utils::create_new_file_path(file_path.to_string())).unwrap();
+    for (i, mut result) in enumerate(reader.records()) {
+        let mut rec = result.unwrap();
+        let mut g = rec.seq_string();
+        dust::dust(&mut g, true);
+        rec.update_seq(&g);
+        writer.write_record(&rec);
+    }
 }

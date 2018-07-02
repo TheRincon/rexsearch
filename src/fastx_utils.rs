@@ -1,6 +1,6 @@
 
 // crate imports
-use bio::io::fasta;
+use io::fasta;
 use bio::io::fastq;
 
 // rust imports
@@ -8,6 +8,7 @@ use std::io::{BufWriter, BufReader};
 use std::fs::File;
 use std::io::BufRead;
 use std::io::Write;
+use std::str;
 
 // local imports
 use dust;
@@ -25,9 +26,8 @@ pub fn duster(file_path: String) {
 pub fn dust_fasta(fasta: fasta::Reader<File>) -> fasta::Reader<File> {
     let reader = fasta::Reader::from_file("/home/danielw1234/Desktop/samp.fasta").unwrap();
     for record in fasta.records() {
-        let result = record.unwrap();
-        let mut seq = result.seq();
-        // dust::dust(&mut seq, true);
+        let mut result = record.unwrap();
+        // dust::dust(&mut r, true);
     }
     reader
 }
@@ -92,22 +92,28 @@ pub fn create_new_file_path(file_path: String) -> String {
     new_file_path
 }
 
+pub fn build_seq(seq_vec: Vec<&[u8]>, l: String) {
+
+}
+
 pub fn write_fasta_new(name: String) {
     let f_path = name.to_owned();
     let f = create_new_fastx(name);
     let filee: BufReader<File> = read_file(f_path);
     let mut writer = BufWriter::new(f);
+    let mut seq_vec: Vec<u8> = Vec::new();
     for line in filee.lines() {
         let mut l = line.unwrap();
-        let mut seq_vec: Vec<char> = l.chars().collect();
         if l.find(">") >= Some(0) {
+            writer.write(l.as_bytes());
             // dust::dust(&mut seq_vec, true);
+            // seq_vec.clear();
+        } else {
+            println!("{:?}", str::from_utf8(&seq_vec));
+            seq_vec.extend_from_slice(l.as_bytes());
+            // seq_line.push(10u8);
         }
-        let mut seq_line = seq_vec.iter().cloned().collect::<String>();
-        seq_line.push_str("\n");
-        writer.write(&seq_line[..].as_bytes());
     }
-
 }
 
 pub fn write_fast_existing(file_path: String) {
