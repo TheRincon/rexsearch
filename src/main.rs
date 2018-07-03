@@ -85,7 +85,8 @@ fn main() {
     // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
     // let k = collect_strings(&args[1]);
     //window_masker::window_masker(&k[..]);
-    collect_seqs("/Users/daniel/Desktop/samp2.fasta");
+    //dust::dust_seqs(&args[1], &args[2], &args[3]);
+    filter::filter_fasta_n(&args[1]);
 
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
@@ -103,17 +104,4 @@ pub fn collect_strings(file_path: &str) -> Vec<String> {
         string_vec.push(rec.seq_string())
     }
     string_vec
-}
-
-pub fn collect_seqs(file_path: &str) {
-
-    let reader = fasta::Reader::from_file(file_path.to_string()).unwrap();
-    let mut writer = fasta::Writer::to_file(fastx_utils::create_new_file_path(file_path.to_string())).unwrap();
-    for (i, mut result) in enumerate(reader.records()) {
-        let mut rec = result.unwrap();
-        let mut g = rec.seq_string();
-        dust::dust(&mut g, true);
-        rec.update_seq(&g);
-        writer.write_record(&rec);
-    }
 }

@@ -22,10 +22,13 @@ pub fn filter_fasta_n(file_path: &str) {
 
 pub fn filter_fastq_n(file_path: &str) {
     let reader = fastq::Reader::from_file(file_path).unwrap();
+    let mut writer = fastq::Writer::to_file(fastx_utils::create_new_file_path(file_path.to_string())).unwrap();
     for (i, mut result) in enumerate(reader.records()) {
         let mut rec = result.unwrap();
         if rec.seq().contains(&('N' as u8)) {
-           rec.clear();
+            continue
+        } else {
+            writer.write_record(&mut rec);
         }
     }
 }

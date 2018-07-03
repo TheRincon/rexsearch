@@ -1,3 +1,8 @@
+use io::fasta;
+use io::fastq;
+use fastx_utils;
+use dust;
+
 const DUST_LEVEL: usize = 20;  // original was 20
 const DUST_WORD: usize = 3;
 const DUST_WINDOW: usize = 64; // original is 64
@@ -6,8 +11,10 @@ const WORD_COUNT: usize = 1 << ( DUST_WORD << 1 );
 static BIT_MASK: usize = WORD_COUNT - 1;
 
 fn wo(len: usize, m: &mut [u8], beg: &mut usize, end: &mut usize) -> usize {
-
-    let l1 = len - DUST_WORD + 1 - 5;
+    if len == 1 {
+        return 1;
+    }
+    let l1 = len - 1; // DUST_WORD + 1 - 5;
     if l1 < 0 { return 0 };
     let chrmap = [0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -102,4 +109,41 @@ pub fn dust(z: &mut str, hardmask: bool) {
         }
         i += DUST_WINDOW_2;
     }
+}
+
+pub fn dust_seqs(file_path: &str, mask_type: &str, file_type: &str) {
+
+    if file_type == "fasta" {
+        let reader = fasta::Reader::from_file(file_path.to_string()).unwrap();
+        let mut writer = fasta::Writer::to_file(fastx_utils::create_new_file_path(file_path.to_string())).unwrap();
+        for mut result in reader.records() {
+            let mut rec = result.unwrap();
+            let mut g = rec.seq_string();
+            if mask_type == "dust" {
+                dust::dust(&mut g, true);
+                rec.update_seq(&g);
+                writer.write_record(&rec);
+            } else if mask_type == "wm" {
+                // wm(&mut g);
+                rec.update_seq(&g);
+                writer.write_record(&rec);
+            } else {
+                panic!("Masking type not recognized");
+            }
+        }
+    } else if file_type == "fastq" {
+        let reader = fastq::Reader::from_file(file_path.to_string()).unwrap();
+        let mut writer = fastq::Writer::to_file(fastx_utils::create_new_file_path(file_path.to_string())).unwrap();
+        for mut result in reader.records() {
+            let mut rec = result.unwrap();
+            let mut g = rec.seq_string();
+            dust::dust(&mut g, true);
+            rec.update_seq(&g);
+            writer.write_record(&rec);
+        }
+    } else {
+        panic!("another file type expected");
+    }
+
+
 }

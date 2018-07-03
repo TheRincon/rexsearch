@@ -203,7 +203,12 @@ impl Record {
     }
 
     /// Return the sequence string of the record.
-    pub fn seq_string(&self) -> String { self.seq.to_owned() }
+    pub fn seq_string(&mut self) -> String { self.seq.to_owned() }
+
+    /// Update seq from masking
+    pub fn update_seq(&mut self, new: &str) {
+        self.seq = new.to_string();
+    }
 
     /// Return the base qualities of the record.
     pub fn qual(&self) -> &[u8] {

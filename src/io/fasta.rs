@@ -624,12 +624,15 @@ impl Record {
             self.seq.as_bytes()
     }
 
+    /// Update seq from masking
     pub fn update_seq(&mut self, new: &str) {
         self.seq = new.to_string();
     }
 
     /// Return the string sequence of the record
-    pub fn seq_string(&mut self) -> String { self.seq.as_mut_str().to_owned() }
+    pub fn seq_string(&mut self) -> String {
+        self.seq.as_mut_str().to_owned()
+    }
 
     /// Clear the record.
     pub fn clear(&mut self) {
