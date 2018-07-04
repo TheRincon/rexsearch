@@ -19,4 +19,4 @@ TRF maybe, and something specific for Fungi (OcculterCut?).
 
 Of course, the licensing applies from vsearch. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes), also took some code from rust::bio. Same applies, all credit to Johannes. 
 
-
+Currently, I am ~10x slower than vsearch in both filtering and masking. SIMD will help I think and some optimization could probably get me in the same ballpark. 
