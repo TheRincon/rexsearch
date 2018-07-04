@@ -20,3 +20,5 @@ TRF maybe, and something specific for Fungi (OcculterCut?).
 Of course, the licensing applies from vsearch. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes), also took some code from rust::bio. Same applies, all credit to Johannes. 
 
 Currently, I am ~10x slower than vsearch in both filtering and masking. SIMD will help I think and some optimization could probably get me in the same ballpark. 
+
+2 issues, vsearch --fastx_mask puts everything to uppercase (softmasking goes away). Maybe this is how it should be, but I don't think so. The other issue is, vsearch removes everything after " " in the fasta header. Again, maybe this is for a reason but I prefer to keep the file as is. Other than that, I am fairly sure I give more or less, the same output. 
