@@ -623,7 +623,7 @@ impl Record {
     }
 
     /// Return the string sequence of the record
-    pub fn seq_string(&self) -> String { self.seq.to_owned() }
+    pub fn seq_string(&mut self) -> String { self.seq.to_owned() }
 
     /// Clear the record.
     pub fn clear(&mut self) {

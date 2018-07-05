@@ -9,7 +9,7 @@ pub fn rev_comp(i: &mut str) -> String {
     ri.chars().rev().collect::<String>()
 }
 
-fn replace_bases(x: char) -> char {
+pub fn replace_bases(x: char) -> char {
 
     match x {
 

@@ -23,7 +23,7 @@ pub fn wm(k: &[String], rev_vec: &[String]) {
     let mut r = kmer_map.into_iter();
     let c  = r.len();
     for i in 0..c {
-        println!("{:?}", r.next().unwrap());
+        println!("{:?}", r.next().unwrap()); // Of the form ("ATATTATATAA", 123), stdout then > to file.txt
     }
     // get_thresholds(&kmer_map);
 }
@@ -71,7 +71,7 @@ pub fn kmer_std_dev(u: i64, size: i64, hashmap: &HashMap<&str, i64>) -> i64 {
 }
 
 
-pub fn get_thresholds(hashmap: &HashMap<&str, i64>) {
+pub fn get_thresholds(hashmap: &HashMap<&str, i64>) -> i64 {
 
     // get sum of all kmers, again this could be calculated before hand I guess.
     // maybe just a check to see if we missed any?
@@ -80,7 +80,7 @@ pub fn get_thresholds(hashmap: &HashMap<&str, i64>) {
     // this needs to be here, because unlike above, we can't know which kmers are represented
     let size = hashmap.keys().len() as i64;
 
-    kmer_std_dev(p / size, size, hashmap);
+    let x = kmer_std_dev(p / size, size, hashmap);
 
     // 3 sigma is around 99.9%
     // 2.575829 sigma is 99.5%

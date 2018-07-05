@@ -1,7 +1,7 @@
 
 // crate imports
-use bio::io::fasta;
-use bio::io::fastq;
+use io::fasta;
+use io::fastq;
 
 // rust imports
 use std::io::{BufWriter, BufReader};
@@ -26,8 +26,8 @@ pub fn dust_fasta(fasta: fasta::Reader<File>) -> fasta::Reader<File> {
     let reader = fasta::Reader::from_file("/home/danielw1234/Desktop/samp.fasta").unwrap();
     for record in fasta.records() {
         let result = record.unwrap();
-        let mut seq = result.seq();
-        // dust::dust(&mut seq, true);
+        let mut y = result.seq();
+        dust::dust(&mut y, true);
     }
     reader
 }
