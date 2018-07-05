@@ -1,5 +1,4 @@
 
-
 pub fn rev_comp(i: &mut str) -> String {
 
     let mut ri = String::with_capacity(i.len());
@@ -9,6 +8,7 @@ pub fn rev_comp(i: &mut str) -> String {
     ri.chars().rev().collect::<String>()
 }
 
+#[inline]
 fn replace_bases(x: char) -> char {
 
     match x {

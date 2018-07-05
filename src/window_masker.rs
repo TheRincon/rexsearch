@@ -28,7 +28,7 @@ pub fn wm(k: &[String], rev_vec: &[String]) {
     // get_thresholds(&kmer_map);
 }
 
-// 100 billion is around 18 so it better be huge to get 50 --> L/(4^K) < 5
+// 100 billion is around 18 so it better be huge to get 40 --> L/(4^K) < 5
 // Taken from WindowMasker Docs:
 // https://academic.oup.com/bioinformatics/article/22/2/134/424703
 
@@ -63,10 +63,10 @@ pub fn nmer_scanner<'a>(contig: &'a str, rev_contig: &'a str, nmer_len: i64, has
     }
 }
 
-pub fn kmer_std_dev(u: i64, size: i64, hashmap: &HashMap<&str, i64>) -> i64 {
+pub fn kmer_std_dev(u: i64, size: i64, hashmap: &HashMap<&str, i64>) -> f64 {
     // println!("{:?}", u);
     let stdd: i64 = hashmap.values().into_iter().map(|&x| (x - u) * (x - u)).sum();
-    let y = ((stdd / size - 1) as f64).sqrt() as i64;
+    let y = ((stdd / size - 1) as f64).sqrt();  // Bessel's correction
     y
 }
 
@@ -75,20 +75,22 @@ pub fn get_thresholds(hashmap: &HashMap<&str, i64>) {
 
     // get sum of all kmers, again this could be calculated before hand I guess.
     // maybe just a check to see if we missed any?
-    let p: i64 = hashmap.values().into_iter().sum();
+    let u = hashmap.values().into_iter().sum();
 
     // this needs to be here, because unlike above, we can't know which kmers are represented
     let size = hashmap.keys().len() as i64;
 
-    kmer_std_dev(p / size, size, hashmap);
+    let std_dev = kmer_std_dev(u / size, size, hashmap);
 
     // 3 sigma is around 99.9%
     // 2.575829 sigma is 99.5%
     // 2.33 sigma is ~99.0%
     // 1.644854 sigma is 90.0%
     // CDF here, need 99.8, 99.5, 99.0, 90.0 for T_High, T_Thresh, T_Extend, and T_Low respectively.
-
-    // Bessel's correction of the kmer count
+    let sig_998 = (std_dev * 2.87816).round() as i64; // T_High
+    let sig_995 = (std_dev * 2.57583).round() as i64; // T_Thresh
+    let sig_990 = (std_dev * 2.32635).round() as i64; // T_Extend
+    let sig_900 = (std_dev * 1.64485).round() as i64; // T_Low
 
 }
 
