@@ -1,3 +1,5 @@
+
+
 use std::collections::HashMap;
 use std::str;
 use itertools::enumerate;
@@ -20,12 +22,7 @@ pub fn wm(k: &[String], rev_vec: &[String]) {
     for (i,s) in enumerate(k) {
             nmer_scanner(s, &rev_vec[i], nmer_len, &mut kmer_map);
     }
-    let mut r = kmer_map.into_iter();
-    let c  = r.len();
-    for i in 0..c {
-        println!("{:?}", r.next().unwrap());
-    }
-    // get_thresholds(&kmer_map);
+    get_hashmap_stats(&kmer_map);
 }
 
 // 100 billion is around 18 so it better be huge to get 40 --> L/(4^K) < 5
@@ -63,24 +60,16 @@ pub fn nmer_scanner<'a>(contig: &'a str, rev_contig: &'a str, nmer_len: i64, has
     }
 }
 
-pub fn kmer_std_dev(u: i64, size: i64, hashmap: &HashMap<&str, i64>) -> f64 {
-    // println!("{:?}", u);
+pub fn get_hashmap_stats(hashmap: &HashMap<&str, i64>) -> (f64, i64, i64) {
+    let size = hashmap.keys().len() as i64;
+    let sum: i64 = hashmap.values().into_iter().sum();
+    let u = sum / size;
     let stdd: i64 = hashmap.values().into_iter().map(|&x| (x - u) * (x - u)).sum();
-    let y = ((stdd / size - 1) as f64).sqrt();  // Bessel's correction
-    y
+    let std_dev = ((stdd / size - 1) as f64).sqrt();  // Bessel's correction
+    return (std_dev, u, size)
 }
 
-
-pub fn get_thresholds(hashmap: &HashMap<&str, i64>) {
-
-    // get sum of all kmers, again this could be calculated before hand I guess.
-    // maybe just a check to see if we missed any?
-    let u = hashmap.values().into_iter().sum();
-
-    // this needs to be here, because unlike above, we can't know which kmers are represented
-    let size = hashmap.keys().len() as i64;
-
-    let std_dev = kmer_std_dev(u / size, size, hashmap);
+pub fn get_thresholds(std_dev: f64) {
 
     // 3 sigma is around 99.9%
     // 2.575829 sigma is 99.5%

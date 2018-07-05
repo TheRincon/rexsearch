@@ -84,7 +84,7 @@ fn main() {
     // filter::filter_fasta_n("/Users/daniel/Desktop/samp.fasta");
     // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
     // let k = collect_strings(&args[1]);
-    //window_masker::window_masker(&k[..]);
+    // window_masker::window_masker(&k[..]);
     //dust::dust_seqs(&args[1], &args[2], &args[3]);
     filter::filter_fasta_n(&args[1]);
 
