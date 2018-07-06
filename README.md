@@ -19,6 +19,11 @@ TRF maybe, and something specific for Fungi (OcculterCut?).
 
 Of course, the licensing applies from vsearch. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes), also took some code from rust::bio. Same applies, all credit to Johannes. 
 
-Currently, I am ~10x slower than vsearch in both filtering and masking. SIMD will help I think and some optimization could probably get me in the same ballpark. 
+Currently, Slight faster(!) in DUST masking. The reson for the last post was I forgot to add "--release" to my spotcap intellij profile. Now I am 30% faster than vsearch with much lower cpu usage. Will test more thoroughly with rust benchmarks.
+
+    vsearch --fastx_mask /Users/daniel/Desktop/gg.fasta --fastaout  --qmask dust   10.55s user 0.13s system 291% cpu 3.660 total
+    ./rsearch /Users/daniel/Desktop/gg.fasta  7.23s user 0.14s system 99% cpu 7.434 total
+
+This in fact means vsearch was probably using more cores and was slower. Let's see with more thorough testing. 
 
 2 issues, vsearch --fastx_mask puts everything to uppercase (softmasking goes away). Maybe this is how it should be, but I don't think so. The other issue is, vsearch removes everything after " " in the fasta header. Again, maybe this is for a reason but I prefer to keep the file as is. Other than that, I am fairly sure I give more or less, the same output. 
