@@ -19,7 +19,7 @@ TRF maybe, and something specific for Fungi (OcculterCut?).
 
 Of course, the licensing applies from vsearch. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes), also took some code from rust::bio. Same applies, all credit to Johannes. 
 
-Currently, Slight faster(!) in DUST masking. The reson for the last post was I forgot to add "--release" to my spotcap intellij profile. Now I am 30% faster than vsearch with much lower cpu usage. Will test more thoroughly with rust benchmarks.
+Currently, slightly faster(!) in DUST masking. The reason for the last post was I forgot to add "--release" to my spotcap intellij profile. Now I am 30% faster than vsearch with much lower cpu usage. Will test more thoroughly with rust benchmarks.
 
     vsearch --fastx_mask /Users/daniel/Desktop/gg.fasta --fastaout  --qmask dust   10.55s user 0.13s system 291% cpu 3.660 total
     ./rsearch /Users/daniel/Desktop/gg.fasta  7.23s user 0.14s system 99% cpu 7.434 total
