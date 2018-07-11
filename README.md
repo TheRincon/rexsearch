@@ -5,11 +5,11 @@ Rewriting vsearch with protein comparison and FOGSAA. I have a few ideas how to 
 
 Candidate tools:
 
-rfilter      fast filtering                       // Practically done
-rsearch      for sequnce matches                  // In progress
-rsort        sort by length and abundance         // Not done, but I have rex_sort for this
-rsample      subsample and shuffle reads          // Almost done
-ralign       alignment and splicing tools         // Not Started
+rfilter      fast filtering
+rsearch      for sequnce matches
+rsort        sort by length and abundance
+rsample      subsample and shuffle reads
+ralign       alignment and splicing tools
 
 
 MASKING
