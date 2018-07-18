@@ -83,6 +83,8 @@ fn main() {
     // filter::filter_fasta_n(&args[1]);
     mask::fast_mask(&args[1]);
     // fastx_utils::write_dust_fasta_new("/Users/daniel/Desktop/gg.fasta".to_string());
+    //dust::dust_seqs(&args[1], &args[2], &args[3]);
+    filter::filter_fasta_n(&args[1]);
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
     // println!("{:?}", c);
