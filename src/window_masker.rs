@@ -68,7 +68,7 @@ pub fn get_hashmap_stats(hashmap: &HashMap<&str, i64>) -> (f64, i64, i64) {
     let sum: i64 = hashmap.values().into_iter().sum();
     let u = sum / size;
     let stdd: i64 = hashmap.values().into_iter().map(|&x| (x - u) * (x - u)).sum();
-    let y = ((stdd / size - 1) as f64).sqrt();     // Bessel's correction of the kmer count
+    let std_dev = ((stdd / size - 1) as f64).sqrt();     // Bessel's correction of the kmer count
     return (std_dev, u, size)
 }
 
