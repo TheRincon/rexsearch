@@ -36,13 +36,11 @@ fn wo(len: usize, m: &mut [u8], beg: &mut usize, end: &mut usize) -> usize {
     let (mut bestv, mut besti, mut bestj) = (0usize,0usize,0usize);
     let mut words = [0usize; 64];
     let mut word = 0usize;
-
     for j in 0..len {
         word <<= 2;
         word |= chrmap[m[j] as usize];
         words[j] = word & BIT_MASK;
     }
-
     for i in 0..l1 {
         let mut counts = [0usize; 64];
         let mut sum: usize = 0;
@@ -71,9 +69,7 @@ fn wo(len: usize, m: &mut [u8], beg: &mut usize, end: &mut usize) -> usize {
 }
 
 pub fn dust(z: &mut str, hardmask: bool) {
-
     let m = unsafe { z.as_bytes_mut() };
-
     let len = m.len();
     let (mut a, mut b) = (0,0);
     let mut s: Vec<u8> = vec![88u8; len];
@@ -111,8 +107,7 @@ pub fn dust(z: &mut str, hardmask: bool) {
     }
 }
 
-pub fn dust_seqs(file_path: &str, mask_type: &str, file_type: &str) {
-
+pub fn dust_seqs(file_path: &str, mask_type: &str, file_type: &str, hardmask: bool) {
     if file_type == "fasta" {
         let reader = fasta::Reader::from_file(file_path.to_string()).unwrap();
         let mut writer = fasta::Writer::to_file(fastx_utils::create_new_file_path(file_path.to_string())).unwrap();
@@ -120,7 +115,7 @@ pub fn dust_seqs(file_path: &str, mask_type: &str, file_type: &str) {
             let mut rec = result.unwrap();
             let mut g = rec.seq_string();
             if mask_type == "dust" {
-                dust::dust(&mut g, true);
+                dust::dust(&mut g, hardmask);
                 rec.update_seq(&g);
                 writer.write_record(&rec);
             } else if mask_type == "wm" {
@@ -137,13 +132,11 @@ pub fn dust_seqs(file_path: &str, mask_type: &str, file_type: &str) {
         for mut result in reader.records() {
             let mut rec = result.unwrap();
             let mut g = rec.seq_string();
-            dust::dust(&mut g, true);
+            dust::dust(&mut g, hardmask);
             rec.update_seq(&g);
             writer.write_record(&rec);
         }
     } else {
         panic!("another file type expected");
     }
-
-
 }

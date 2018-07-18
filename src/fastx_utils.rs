@@ -78,7 +78,6 @@ fn parse_ffn(filee: BufReader<File>) {
 } */
 
 pub fn create_new_fastx(file_path: String) -> File {
-
     let ending = file_path.find(".fasta");  // ".fasta" || ".fsa" || ".fna" || ".ffn" || ".frn" || "fa" || ".fas" || ".seq" || ".mpfa" || ".faa"
     let mut new_file_path = file_path[..ending.expect("Could not find file ending of .fasta")].to_string();
     new_file_path.push_str("_new.fasta");
@@ -92,26 +91,22 @@ pub fn create_new_file_path(file_path: String) -> String {
     new_file_path
 }
 
-pub fn build_seq(seq_vec: Vec<&[u8]>, l: String) {
 
-}
-
-pub fn write_fasta_new(name: String) {
+// bufReader is faster than fasta::Reader by about 60 seconds
+pub fn write_dust_fasta_new(name: String) {
     let f_path = name.to_owned();
     let f = create_new_fastx(name);
-    let filee: BufReader<File> = read_file(f_path);
+    let filee = read_file(f_path);
     let mut writer = BufWriter::new(f);
-    let mut seq_vec: Vec<u8> = Vec::new();
     for line in filee.lines() {
         let mut l = line.unwrap();
         if l.find(">") >= Some(0) {
-            writer.write(l.as_bytes());
-            // dust::dust(&mut seq_vec, true);
-            // seq_vec.clear();
+            writer.write(&l.as_bytes());
+            writer.write(&[10u8]);
         } else {
-            println!("{:?}", str::from_utf8(&seq_vec));
-            seq_vec.extend_from_slice(l.as_bytes());
-            // seq_line.push(10u8);
+            dust::dust(&mut l, true);
+            writer.write(&l.as_bytes());
+            writer.write(&[10u8]);
         }
     }
 }
