@@ -1,6 +1,6 @@
 
 // crate imports
-use bio::io::fasta;
+use io::fasta;
 use bio::io::fastq;
 
 // rust imports
@@ -8,6 +8,7 @@ use std::io::{BufWriter, BufReader};
 use std::fs::File;
 use std::io::BufRead;
 use std::io::Write;
+use std::str;
 
 // local imports
 use dust;
@@ -25,9 +26,8 @@ pub fn duster(file_path: String) {
 pub fn dust_fasta(fasta: fasta::Reader<File>) -> fasta::Reader<File> {
     let reader = fasta::Reader::from_file("/home/danielw1234/Desktop/samp.fasta").unwrap();
     for record in fasta.records() {
-        let result = record.unwrap();
-        let mut seq = result.seq();
-        // dust::dust(&mut seq, true);
+        let mut result = record.unwrap();
+        // dust::dust(&mut r, true);
     }
     reader
 }
@@ -78,7 +78,6 @@ fn parse_ffn(filee: BufReader<File>) {
 } */
 
 pub fn create_new_fastx(file_path: String) -> File {
-
     let ending = file_path.find(".fasta");  // ".fasta" || ".fsa" || ".fna" || ".ffn" || ".frn" || "fa" || ".fas" || ".seq" || ".mpfa" || ".faa"
     let mut new_file_path = file_path[..ending.expect("Could not find file ending of .fasta")].to_string();
     new_file_path.push_str("_new.fasta");
@@ -92,22 +91,24 @@ pub fn create_new_file_path(file_path: String) -> String {
     new_file_path
 }
 
-pub fn write_fasta_new(name: String) {
+
+// bufReader is faster than fasta::Reader by about 60 seconds
+pub fn write_dust_fasta_new(name: String) {
     let f_path = name.to_owned();
     let f = create_new_fastx(name);
-    let filee: BufReader<File> = read_file(f_path);
+    let filee = read_file(f_path);
     let mut writer = BufWriter::new(f);
     for line in filee.lines() {
         let mut l = line.unwrap();
-        let mut seq_vec: Vec<char> = l.chars().collect();
         if l.find(">") >= Some(0) {
-            // dust::dust(&mut seq_vec, true);
+            writer.write(&l.as_bytes());
+            writer.write(&[10u8]);
+        } else {
+            dust::dust(&mut l, true);
+            writer.write(&l.as_bytes());
+            writer.write(&[10u8]);
         }
-        let mut seq_line = seq_vec.iter().cloned().collect::<String>();
-        seq_line.push_str("\n");
-        writer.write(&seq_line[..].as_bytes());
     }
-
 }
 
 pub fn write_fast_existing(file_path: String) {

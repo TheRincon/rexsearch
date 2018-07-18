@@ -1,11 +1,4 @@
 /*
-  VSEARCH: a versatile open source tool for metagenomics
-  Copyright (C) 2014-2018, Torbjorn Rognes, Frederic Mahe and Tomas Flouri
-  All rights reserved.
-
-  Contact: Torbjorn Rognes <torognes@ifi.uio.no>,
-  Department of Informatics, University of Oslo,
-  PO Box 1080 Blindern, NO-0316 Oslo, Norway
 
   This software is dual-licensed and available under a choice
   of one of two licenses, either under the terms of the GNU
@@ -68,6 +61,7 @@ pub mod fastx_utils;
 pub mod io;
 pub mod filter;
 pub mod dna_utils;
+pub mod mask;
 
 use std::env;
 
@@ -83,21 +77,16 @@ fn main() {
     // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
     // filter::filter_fasta_n("/Users/daniel/Desktop/samp.fasta");
     // fastx_utils::duster("/home/danielw1234/Desktop/samp.fasta".to_string());
-    let k = collect_seqs(&args[1]);
-    window_masker::window_masker(&k[..]);
+    // let k = collect_strings(&args[1]);
+    // window_masker::window_masker(&k[..]);
+    // dust::dust_seqs(&args[1], &args[2], &args[3]);
+    // filter::filter_fasta_n(&args[1]);
+    mask::fast_mask(&args[1]);
+    // fastx_utils::write_dust_fasta_new("/Users/daniel/Desktop/gg.fasta".to_string());
+    //dust::dust_seqs(&args[1], &args[2], &args[3]);
+    filter::filter_fasta_n(&args[1]);
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
     // println!("{:?}", c);
 
-}
-
-pub fn collect_seqs(file_path: &str) -> Vec<String> {
-
-    let reader = fasta::Reader::from_file(file_path.to_string()).unwrap();
-    let mut string_vec = Vec::new();
-    for (i, mut result) in enumerate(reader.records()) {
-        let mut rec = result.unwrap();
-        string_vec.push(rec.seq_string())
-    }
-    string_vec
 }
