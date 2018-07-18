@@ -74,13 +74,6 @@ pub fn dust(z: &mut str, hardmask: bool) {
     let (mut a, mut b) = (0,0);
     let mut s: Vec<u8> = vec![88u8; len];
     s.clone_from_slice(&m);
-    if !hardmask {
-        /* convert sequence to upper case unless hardmask in effect */
-        // for i in 0..len {
-            // m[i] = toupper(m[i])
-        // };
-        // m[len] = 0;  // what is this?
-    }
     let mut i = 0;
     while i < len {
         let l = if len > i + DUST_WINDOW { DUST_WINDOW } else { len-i };
