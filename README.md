@@ -7,11 +7,11 @@ Rewriting vsearch with protein comparison and FOGSAA. I have a few ideas how to 
 
 Candidate tools:
 
-rfilter &nbsp;&nbsp;&nbsp; fast filtering <br>
+rfilter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fast filtering <br>
 rsearch &nbsp;&nbsp;&nbsp; for sequnce matches <br>
-rsort   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort by length and abundance <br>
+rsort   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort by length and abundance <br>
 rsample &nbsp;&nbsp;&nbsp;    subsample and shuffle reads <br>
-ralign  &nbsp;&nbsp;&nbsp;&nbsp;     alignment and splicing tools <br>
+ralign  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     alignment and splicing tools <br>
 
 
 ## MASKING
@@ -35,8 +35,8 @@ This in fact means vsearch was probably using more cores and was slower. Let's s
 
 Next Phase is back to alignment:
 
-Smith-Waterman     &nbsp;&nbsp;&nbsp;     Not Started <br>   
-FOGSAA             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Not Started <br>
+Smith-Waterman     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Not Started <br>
+FOGSAA             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Not Started <br>
 Needlemann-Wunsch  &nbsp;&nbsp;&nbsp;     In progress <br>
 
 
