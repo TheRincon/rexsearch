@@ -1,7 +1,7 @@
 # rsearch
 Port of [vsearch](https://github.com/torognes/vsearch) into Rust
 
-Of course, the licensing applies from vsearch. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes), also took some code from rust::bio. Same applies, all credit to Johannes. And of course, [usearch](https://www.drive5.com/usearch/).
+The licensing applies from vsearch, since it is mostly a port. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes), also took some code from rust::bio. Same applies, all credit to Johannes. And of course, [usearch](https://www.drive5.com/usearch/).
 
 Rewriting vsearch with protein comparison and FOGSAA. I have a few ideas how to use this for annotation and other projects. Such as "overhang" extension. I need to a tool to try to fill in gaps in assemblies from PacBio to Illumina. My Illumina reads always drop coverage in HiSeq and I would like to "fill-in" these gaps by returning partial alignments and long overhangs. Many tools already do something similar, but not quite the way I wish to use it though. Still getting to the point of the original intent. Now, I am also thinking about making several smaller, more modular tools, as part of package perhaps. 
 
@@ -34,7 +34,7 @@ This in fact means vsearch was probably using more cores and was slower. Let's s
 Next Phase is back to alignment:
 
 Smith-Waterman &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not Started <br>
-FOGSAA       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not Started <br>
+FOGSAA       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not Started <br>
 Needlemann-Wunsch  &nbsp;&nbsp;&nbsp;     In progress <br>
 
 
