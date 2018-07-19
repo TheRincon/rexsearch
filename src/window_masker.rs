@@ -1,9 +1,9 @@
 /*
-    A port of VSEARCH into rust with added functioanlity.
-
-
+    Window masker in rust
+    https://academic.oup.com/bioinformatics/article/22/2/134/424703
+    Useful for masking as an alternative to DUST. RepeatModeler and
+    RepeatMasker are too involved for this task.
 */
-
 
 use std::collections::HashMap;
 use std::str;
@@ -27,13 +27,10 @@ pub fn wm(k: &[String], rev_vec: &[String]) {
             nmer_scanner(s, &rev_vec[i], nmer_len, &mut kmer_map);
     }
     let (std_dev, mean, size) = get_hashmap_stats(&kmer_map);
-
+    let (t_high, t_thresh, t_extend, t_low) = get_thresholds(std_dev);
 }
 
 // 100 billion is around 18 so it better be huge to get 40 --> L/(4^K) < 5
-// Taken from WindowMasker Docs:
-// https://academic.oup.com/bioinformatics/article/22/2/134/424703
-
 pub fn nmer_estimate(estimate_sum: i64) -> i64 {
     for i in 1..40 {
         if estimate_sum / ( 4_i64.pow(i as u32)) < 5 {

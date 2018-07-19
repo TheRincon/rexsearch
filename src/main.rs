@@ -47,11 +47,10 @@
 extern crate rand;
 extern crate bio;
 #[macro_use] extern crate clap;
-extern crate itertools;
 extern crate csv;
 #[macro_use] extern crate serde_derive;
 extern crate serde;
-extern crate statrs;
+extern crate itertools;
 
 pub mod abundance;
 pub mod dust;
@@ -62,15 +61,14 @@ pub mod io;
 pub mod filter;
 pub mod dna_utils;
 pub mod mask;
+pub mod truncate;
 
 use std::env;
 
 use clap::{App, Arg, SubCommand};
 use io::fasta;
-use itertools::enumerate;
 
 fn main() {
-
     let args: Vec<String> = env::args().collect();
     // let yaml = load_yaml!("cli.yml");
     // let matches = App::from_yaml(yaml).get_matches();
@@ -81,12 +79,12 @@ fn main() {
     // window_masker::window_masker(&k[..]);
     // dust::dust_seqs(&args[1], &args[2], &args[3]);
     // filter::filter_fasta_n(&args[1]);
-    mask::fast_mask(&args[1]);
+    // mask::fast_mask(&args[1]);
     // fastx_utils::write_dust_fasta_new("/Users/daniel/Desktop/gg.fasta".to_string());
     //dust::dust_seqs(&args[1], &args[2], &args[3]);
-    filter::filter_fasta_n(&args[1]);
+    // filter::filter_both_fasta(&args[1]);
+    truncate::trunc_fasta(&args[1], 10);
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
     // println!("{:?}", c);
-
 }

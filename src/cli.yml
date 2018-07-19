@@ -9,7 +9,7 @@ args:
         value_name: FILE
         help: Use a custom config file
         takes_value: true
-    - fasta:
+    - genome:
         help: Input fasta to use
         required: true
         index: 1
@@ -68,6 +68,9 @@ subcommands:
             - minlength:
                 takes_value: true
                 help: Minimum length
+            - maxns:
+                takes_value: true
+
 
     - cluster:
         version: "0.1"
@@ -87,6 +90,8 @@ subcommands:
 
     - shuffle:
         version: "0.1"
+        args:
+          -
 
     - subsample:
         version: "0.1"

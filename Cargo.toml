@@ -10,5 +10,4 @@ csv = "*"
 itertools = "*"
 serde = "*"
 serde_derive = "*"
-statrs = "*"
 clap = { version = "2.31", features = ["yaml"] }
