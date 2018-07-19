@@ -1,3 +1,7 @@
+// Use siphash from rust std
+// Not going to roll my own crypto lib -- yet
+
+
 
 // right rotate
 fn rotate_64(val: u64, shift: i64) -> u64 {

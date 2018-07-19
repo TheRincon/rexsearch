@@ -66,7 +66,7 @@ pub fn nt_identical(a: char, b: char) {
 
 #[inline]
 pub fn finishop(cigarendp: &mut [char], op: char, count: i64) {
-    if op && count {
+    if op != '0' && count > 0 {
         // *--*cigarendp = *op;
         if (count > 1) {
 
@@ -75,7 +75,7 @@ pub fn finishop(cigarendp: &mut [char], op: char, count: i64) {
 }
 
 #[inline]
-pub fn pushop(newop: char, cigarend: &mut [char], op: & mut char, count: & mut i64) {
+pub fn pushop(newop: &mut char, cigarend: &mut [char], op: & mut char, count: & mut i64) {
 
     if newop == &op {
         count += 1;
@@ -85,7 +85,7 @@ pub fn pushop(newop: char, cigarend: &mut [char], op: & mut char, count: & mut i
 
         }
         op = newop;
-        count = 1;
+        count = &mut 1i64;
     }
 }
 
@@ -142,7 +142,7 @@ pub fn nw_align(dseq: &str,
     let dlen: usize = dend - dseq;
 
     if qlen * deln > info.da {
-        info.dir_mass = qlen * dlen;
+        info.dir_mass = qlen as i64 * dlen;
         info.dir.resize(dir_mass,0);
     }
     let need = 2 * qlen * (mem::size_of::<i64>());
@@ -175,7 +175,7 @@ pub fn nw_align(dseq: &str,
 
         for m in 0..qlen {
             let d1 = info.dir + qlen*j+1;
-            n = &hep;
+            n = hep;
             e = &hep + 1;
             h += getscore(score_matrix, dseq[j], sqeq[i]);
 
@@ -189,7 +189,7 @@ pub fn nw_align(dseq: &str,
                 &d1 |= maskleft;
             }
 
-            &hep = h;
+            &hep = &h;
 
             if i < qlen-1 {
                 h_e = h - gap_open_q_interior - gap_extend_q_interior;
@@ -211,7 +211,7 @@ pub fn nw_align(dseq: &str,
                 e = h_e;
             }
 
-            &(hep+1) = e;   // syntax not familiar
+            &(hep+1) = &e;   // syntax not familiar
             h = n;
             hep += 2;
         }
@@ -226,7 +226,7 @@ pub fn nw_align(dseq: &str,
     let mut cigar = Vec::with_capacity(qlen + dlen + 1);
     let mut cigarend = Vec::with_capacity(cigar+qlen+deln+1);
 
-    let mut op: char = "0";
+    let mut op: char = '0';
     let mut count: i64 = 0;
     *(--cigarend) = 0;
 
@@ -247,12 +247,12 @@ pub fn nw_align(dseq: &str,
             score -= gap_extend_q;
             indels += 1;
             j -= 1;
-            pushop('I', &cigarend, &op, &count);
+            pushop(&mut 'I', &cigarend, &mut op, &mut count);
         } else if op == 'D' && (d & maskextup) {
             score -= gap_extend_t;
             indels += 1;
             i += 1;
-            pushop('D', &cigarend, &op, &count);
+            pushop(&mut 'D', &cigarend, &mut op, &mut count);
         } else if d & maskleft {
             score -= gap_extend_q;
             indels += 1;
@@ -261,7 +261,7 @@ pub fn nw_align(dseq: &str,
                 gaps += 1;
             }
             j -= 1;
-            pushop('I', &cigarend, &op, &count);
+            pushop(&mut 'I', &cigarend, &mut op, &mut count);
         } else if d & maskup {
             score -= gap_extend_t;
             indels += 1;
@@ -270,7 +270,7 @@ pub fn nw_align(dseq: &str,
                 gaps += 1;
             }
             i -= 1;
-            pushop('D', &cigarend, &op, &count);
+            pushop(&mut 'D', &cigarend, &mut op, &mut count);
         } else {
             score += getscore(score_matrix, dseq[j-1], qseq[i-1]);
             if nt_identical(dseq[j-1], qseq[i-1]) {
@@ -278,7 +278,7 @@ pub fn nw_align(dseq: &str,
             }
             i -= 1;
             j -= 1;
-            pushop('M', &cigarend, &op, &count);
+            pushop(&mut 'M', &cigarend, &mut op, &mut count);
         }
     }
 
@@ -291,7 +291,7 @@ pub fn nw_align(dseq: &str,
             gaps += 1;
         }
         i -= 1;
-        pushop('D', &cigarend, &op, &count);
+        pushop(&mut 'D', &cigarend, &mut op, &mut count);
     }
 
     while (j > 0) {
@@ -303,8 +303,8 @@ pub fn nw_align(dseq: &str,
             gaps += 1;
         }
         j -= 1;
-        pushop('I', &cigarend, &op, &count);
+        pushop(&mut 'I', &cigarend, &mut op, &mut count);
     }
-    finishop(&cigarend, &op, &count);
+    finishop(&cigarend, op, count);
 }
 

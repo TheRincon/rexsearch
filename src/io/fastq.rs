@@ -53,7 +53,10 @@ use std::io;
 use std::io::prelude::*;
 use std::path::Path;
 
-use bio::utils::TextSlice;
+/// Type alias for an owned text, i.e. ``Vec<u8>``.
+pub type Text = Vec<u8>;
+/// Type alias for a text slice, i.e. ``&[u8]``.
+pub type TextSlice<'a> = &'a [u8];
 
 /// A FastQ reader.
 #[derive(Debug)]

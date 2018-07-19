@@ -52,7 +52,6 @@
 */
 
 extern crate rand;
-extern crate bio;
 #[macro_use] extern crate clap;
 extern crate itertools;
 extern crate csv;

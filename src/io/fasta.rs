@@ -44,10 +44,15 @@ use std::path::Path;
 
 use csv;
 
-use bio::utils::{Text, TextSlice};
+// use bio::utils::{Text, TextSlice};
 
 /// Maximum size of temporary buffer used for reading indexed FASTA files.
 const MAX_FASTA_BUFFER_SIZE: usize = 512;
+
+/// Type alias for an owned text, i.e. ``Vec<u8>``.
+pub type Text = Vec<u8>;
+/// Type alias for a text slice, i.e. ``&[u8]``.
+pub type TextSlice<'a> = &'a [u8];
 
 /// A FASTA reader.
 #[derive(Debug)]
