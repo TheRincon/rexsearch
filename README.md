@@ -5,6 +5,10 @@ The licensing applies from vsearch, since it is mostly a port. I intend no copyr
 
 Rewriting vsearch with protein comparison and FOGSAA. I have a few ideas how to use this for annotation and other projects. Such as "overhang" extension. I need to a tool to try to fill in gaps in assemblies from PacBio to Illumina. My Illumina reads always drop coverage in HiSeq and I would like to "fill-in" these gaps by returning partial alignments and long overhangs. Many tools already do something similar, but not quite the way I wish to use it though. Still getting to the point of the original intent. Now, I am also thinking about making several smaller, more modular tools, as part of package perhaps. 
 
+## Comments
+
+RSEARCH is nearing VSEARCH speed. It is 30% faster for one core, but overall 50% slower because I only use 1 core. This is also for simple tasks such as msking or filtering reads, not alignment. 
+
 Candidate tools:
 
 rfilter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fast filtering <br>
@@ -12,13 +16,6 @@ rsearch &nbsp;&nbsp;&nbsp; for sequnce matches <br>
 rsort   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort by length and abundance <br>
 rsample &nbsp;&nbsp;&nbsp;    subsample and shuffle reads <br>
 ralign  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     alignment and splicing tools <br>
-
-
-## MASKING
-
-Experimental DUST branch using u8's is active, but I really feel weird using as_bytes_mut(), as the whole point of rust is to avoid unsafe. I may just drop u8's and move back to char's. 
-
-Currently, slightly faster(!) in DUST masking. The reason for the last post was I forgot to add "--release" to my spotcap intellij profile. Now I am 30% faster than vsearch with much lower cpu usage. Will test more thoroughly with rust benchmarks.
 
 ## FILTER
 
@@ -35,7 +32,7 @@ Next Phase is back to alignment:
 
 Smith-Waterman &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not Started <br>
 FOGSAA       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not Started <br>
-Needlemann-Wunsch  &nbsp;&nbsp;&nbsp;     In progress <br>
+Needlemann-Wunsch  &nbsp;&nbsp;     In progress <br>
 
 
 
