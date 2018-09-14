@@ -11,3 +11,4 @@ itertools = "*"
 serde = "*"
 serde_derive = "*"
 clap = { version = "2.31", features = ["yaml"] }
+bloom = "*"

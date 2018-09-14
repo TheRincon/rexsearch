@@ -44,14 +44,19 @@
   POSSIBILITY OF SUCH DAMAGE.
 */
 
-extern crate rand;
-extern crate bio;
+/// Cargo Crates With Macros
 #[macro_use] extern crate clap;
-extern crate csv;
 #[macro_use] extern crate serde_derive;
+
+/// Cargo Crates
 extern crate serde;
 extern crate itertools;
+extern crate bloom;
+extern crate csv;
+extern crate rand;
+extern crate bio;
 
+/// Local Modules
 pub mod abundance;
 pub mod dust;
 pub mod window_masker;
@@ -63,11 +68,14 @@ pub mod dna_utils;
 pub mod mask;
 pub mod truncate;
 
+/// Rust Std Lib
 use std::env;
 
+/// Used in Main
 use clap::{App, Arg, SubCommand};
 use io::fasta;
 
+/// Collect Args and Run Sub-tasks
 fn main() {
     let args: Vec<String> = env::args().collect();
     // let yaml = load_yaml!("cli.yml");

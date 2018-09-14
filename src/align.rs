@@ -55,37 +55,38 @@ use std::string::String;
 use std::mem;
 
 #[inline]
-pub fn getscore(score_matrix: Vec<i64>, a: char, b: char) -> i64 {
+pub fn getscore(score_matrix: Vec<i64>, a: &char, b: &char) -> i64 {
     return score_matrix[(chrmap_4bit[a] << 4) + chrmap_4bit[b]]
 }
 
 #[inline]
-pub fn nt_identical(a: char, b: char) {
+pub fn nt_identical(a: &char, b: &char) {
     // if
 }
 
 #[inline]
-pub fn finishop(cigarendp: &mut [char], op: char, count: i64) {
+pub fn finishop(cigarendp: &mut [char], op: &char, count: &i64) {
     if op && count {
         // *--*cigarendp = *op;
-        if (count > 1) {
+        if count > 1 {
 
         }
     }
 }
 
 #[inline]
-pub fn pushop(newop: char, cigarend: &mut [char], op: & mut char, count: & mut i64) {
+pub fn pushop(newop: &mut char, cigarend: &mut [char], op: &mut char, count: &mut i64) {
 
     if newop == &op {
         count += 1;
     } else {
         // *--*cigarend = *op;
-        if (count > 1) {
+        if count > 1 {
 
         }
         op = newop;
-        count = 1;
+        let mut placeholder = 1i64;
+        count = &mut placeholder;
     }
 }
 
@@ -126,8 +127,8 @@ pub fn nw_align(dseq: &str,
     let mut info = NWInfo {
         ha: Vec::new(),
         dir: Vec::new(),
-        dir_mass: 0,
-        ha_mass: 0,
+        dir_mass: i64,
+        ha_mass: i64,
     };
 
     let mut h: i64 = 0;
@@ -138,15 +139,15 @@ pub fn nw_align(dseq: &str,
     let mut h_f: i64 = 0;
     let mut hep: i64 = 0;
 
-    let qlen: usize = qend - qseq;
-    let dlen: usize = dend - dseq;
+    let qlen: i64 = qend - qseq;
+    let dlen: i64 = dend - dseq;
 
     if qlen * deln > info.da {
         info.dir_mass = qlen * dlen;
         info.dir.resize(dir_mass,0);
     }
     let need = 2 * qlen * (mem::size_of::<i64>());
-    if (need > info.ha) {
+    if need > info.ha {
         info.ha_mass = need;
         info.ha.resize(need,0);
     }
@@ -167,7 +168,7 @@ pub fn nw_align(dseq: &str,
         } else {
             h = - gap_open_q_left - j * gap_extend_q_left;
         }
-        if (j < deln - 1) {
+        if j < (deln - 1) {
             f = - gap_open_q_left - (j + 1) * gap_extend_q_left - gap_open_t_interior - gap_extend_t_interior;
         } else {
             f = - gap_open_q_left - (j + 1) * gap_extend_q_left - gap_open_t_right - gap_extend_t_right;
@@ -175,7 +176,7 @@ pub fn nw_align(dseq: &str,
 
         for m in 0..qlen {
             let d1 = info.dir + qlen*j+1;
-            n = &hep;
+            n = hep;
             e = &hep + 1;
             h += getscore(score_matrix, dseq[j], sqeq[i]);
 
@@ -189,7 +190,7 @@ pub fn nw_align(dseq: &str,
                 &d1 |= maskleft;
             }
 
-            &hep = h;
+            &hep = &h;
 
             if i < qlen-1 {
                 h_e = h - gap_open_q_interior - gap_extend_q_interior;
@@ -226,14 +227,15 @@ pub fn nw_align(dseq: &str,
     let mut cigar = Vec::with_capacity(qlen + dlen + 1);
     let mut cigarend = Vec::with_capacity(cigar+qlen+deln+1);
 
-    let mut op: char = "0";
+    let mut op: char = '0';
     let mut count: i64 = 0;
-    *(--cigarend) = 0;
+    // *(--cigarend) = 0;
+    let mut newop = '0';
 
     i = qlen;
     j = dlen;
 
-    while (i>0 && j > 0) {
+    while i>0 && j > 0 {
         let gap_open_q = if i < qlen { gap_open_q_interior } else { gap_open_q_right };
         let gap_extend_q = if i < qlen { gap_extend_q_interior } else { gap_extend_q_right };
         let gap_open_t = if j < dlen { gap_open_t_interior } else { gap_open_t_right };
@@ -247,12 +249,14 @@ pub fn nw_align(dseq: &str,
             score -= gap_extend_q;
             indels += 1;
             j -= 1;
-            pushop('I', &cigarend, &op, &count);
+            let mut newop = 'I';
+            pushop(&mut newop, &cigarend, &mut op, &mut count);
         } else if op == 'D' && (d & maskextup) {
             score -= gap_extend_t;
             indels += 1;
             i += 1;
-            pushop('D', &cigarend, &op, &count);
+            newop = 'D';
+            pushop(&mut newop, &mut cigarend, &mut op, &mut count);
         } else if d & maskleft {
             score -= gap_extend_q;
             indels += 1;
@@ -261,7 +265,8 @@ pub fn nw_align(dseq: &str,
                 gaps += 1;
             }
             j -= 1;
-            pushop('I', &cigarend, &op, &count);
+            newop = 'I';
+            pushop(&mut newop, &mut cigarend, &mut op, &mut count);
         } else if d & maskup {
             score -= gap_extend_t;
             indels += 1;
@@ -270,7 +275,8 @@ pub fn nw_align(dseq: &str,
                 gaps += 1;
             }
             i -= 1;
-            pushop('D', &cigarend, &op, &count);
+            newop = 'D';
+            pushop(&mut newop, &cigarend, &mut op, &mut count);
         } else {
             score += getscore(score_matrix, dseq[j-1], qseq[i-1]);
             if nt_identical(dseq[j-1], qseq[i-1]) {
@@ -278,11 +284,12 @@ pub fn nw_align(dseq: &str,
             }
             i -= 1;
             j -= 1;
-            pushop('M', &cigarend, &op, &count);
+            newop = 'M';
+            pushop(&mut newop, &mut cigarend, &mut op, &mut count);
         }
     }
 
-    while (i > 0) {
+    while i > 0 {
         alength += 1;
         score -= gap_extend_t_left;
         indels += 1;
@@ -291,10 +298,11 @@ pub fn nw_align(dseq: &str,
             gaps += 1;
         }
         i -= 1;
-        pushop('D', &cigarend, &op, &count);
+        newop = 'D';
+        pushop(&mut newop, &mut cigarend, &mut op, &mut count);
     }
 
-    while (j > 0) {
+    while j > 0 {
         alength += 1;
         score -= gap_extend_t_left;
         indels += 1;
@@ -303,7 +311,8 @@ pub fn nw_align(dseq: &str,
             gaps += 1;
         }
         j -= 1;
-        pushop('I', &cigarend, &op, &count);
+        newop = 'I';
+        pushop(&mut newop, &mut cigarend, &mut op, &mut count);
     }
     finishop(&cigarend, &op, &count);
 }
