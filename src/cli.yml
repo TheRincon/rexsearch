@@ -1,7 +1,7 @@
 name: rsearch
 version: "0.1"
 author: Daniel Whitfield <rinconrex@gmail.com>
-about: multi-purpose bioiformatics tool
+about: multi-purpose bioiformatics tool based on VSEARCH
 args:
     - config:
         short: c
@@ -9,10 +9,11 @@ args:
         value_name: FILE
         help: Use a custom config file
         takes_value: true
-    - genome:
-        help: Input fasta to use
+    - file:
+        help: Input file to use
         required: true
         index: 1
+        short: F
     - verbose:
         short: v
         multiple: true
@@ -37,6 +38,9 @@ subcommands:
             - piler:
                 short: p
                 help: Use PILER from RC Edgar
+            - tantan:
+                short: T
+                help: Use TANTAN
             - all:
                 short: a
                 help: Use all maskers: windowmasker dust and trf
@@ -64,29 +68,38 @@ subcommands:
                 help: Filter both soft- and hardmasked records
             - maxlength:
                 takes_value: true
-                help: Filter by maximum length of sequence
+                help: Filter by maximum length of sequence for analysis
             - minlength:
                 takes_value: true
-                help: Minimum length
+                help: Minimum length filter, all below this length ignored for analysis
             - maxns:
                 takes_value: true
+                help: Maximum number of "n" characters accepted in string
 
 
     - cluster:
         version: "0.1"
         args:
             - length:
+                help: Sort sequences by length
             - abundance:
+                help: Sort sequences by abundance ("size=" tag)
             -
 
     - chimera:
         version: "0.1"
+        help: Chimera detection
         args:
             -
 
     - sort:
-        about:
+        about: Sorting reads by length or abundance ("size=" tag in fasta)
         version: "0.1"
+        args:
+            - length:
+                help: Sort sequences by length
+            - abundance:
+                help: Sort sequences by abundance ("size=" tag)
 
     - shuffle:
         version: "0.1"
@@ -95,6 +108,11 @@ subcommands:
 
     - subsample:
         version: "0.1"
+        help: Randomly sample reads or sequences
+        args:
+            - number:
+                short: u
+                help: Subsample number of sequences
 
     - search:
         version: "0.1"

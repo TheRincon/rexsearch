@@ -67,7 +67,7 @@ pub fn nt_identical(a: &char, b: &char) {
 #[inline]
 pub fn finishop(cigarendp: &mut [char], op: &char, count: &i64) {
     if op && count {
-        // *--*cigarendp = *op;
+        *--*cigarendp = *op;
         if count > 1 {
 
         }
@@ -80,7 +80,7 @@ pub fn pushop(newop: &mut char, cigarend: &mut [char], op: &mut char, count: &mu
     if newop == &op {
         count += 1;
     } else {
-        // *--*cigarend = *op;
+        *--*cigarend = *op;
         if count > 1 {
 
         }
@@ -114,12 +114,12 @@ pub fn nw_align(dseq: &str,
              gap_extend_t_left: i64,
              gap_extend_t_right: i64,
              gap_extend_t_interior: i64,
-             score: i64,
-             diff: i64,
-             gaps: i64,
-             indels: i64,
-             alignment_len: i64,
-             alignment: &str,
+             score: &mut i64,
+             diff: &mut i64,
+             gaps: &mut i64,
+             indels: &mut i64,
+             alignment_len: &mut i64,
+             alignment: &mut str,
              query_no: i64,
              db_seq_no: i64,
              info: NWInfo) {
@@ -225,7 +225,7 @@ pub fn nw_align(dseq: &str,
     let mut indels: i64 = 0;
 
     let mut cigar = Vec::with_capacity(qlen + dlen + 1);
-    let mut cigarend = Vec::with_capacity(cigar+qlen+deln+1);
+    let mut cigarend = Vec::with_capacity(cigar.len() as i64 + qlen + dlen + 1);
 
     let mut op: char = '0';
     let mut count: i64 = 0;
@@ -315,5 +315,14 @@ pub fn nw_align(dseq: &str,
         pushop(&mut newop, &mut cigarend, &mut op, &mut count);
     }
     finishop(&cigarend, &op, &count);
+
+    cigar.resize(1 + cigar.len() as i64 + qlen + dlen - cigarend.len() as i64);
+
+    score = dist;
+    diff = &mut alength - &mut matches;
+    alignment_len = &mut alength;
+    alignment = cigar;
+    gaps = gaps;
+    indels = indels;
 }
 
