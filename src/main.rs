@@ -51,6 +51,7 @@ extern crate csv;
 #[macro_use] extern crate serde_derive;
 extern crate serde;
 extern crate itertools;
+extern crate cupid;
 
 pub mod abundance;
 pub mod dust;
@@ -83,8 +84,19 @@ fn main() {
     // fastx_utils::write_dust_fasta_new("/Users/daniel/Desktop/gg.fasta".to_string());
     //dust::dust_seqs(&args[1], &args[2], &args[3]);
     // filter::filter_both_fasta(&args[1]);
-    truncate::trunc_fasta(&args[1], 10);
+    // truncate::trunc_fasta(&args[1], 10);
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
     // println!("{:?}", c);
+
+    let c = cupid::master();
+    println!("{:#?}", c);
+    if let Some(c) = c {
+        if c.sse4_2() {
+            println!("SSE 4.2 Available");
+        }
+        if c.avx2() {
+            println!("AVX2 Available")
+        }
+    }
 }

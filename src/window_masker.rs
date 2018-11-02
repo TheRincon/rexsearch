@@ -75,11 +75,8 @@ pub fn get_thresholds(std_dev: f64) -> (i64, i64, i64, i64) {
     // 2.33 sigma is ~99.0%
     // 1.644854 sigma is 90.0%
     // CDF here, need 99.8, 99.5, 99.0, 90.0 for T_High, T_Thresh, T_Extend, and T_Low respectively.
-    let sig_998 = (std_dev * 2.87816).round() as i64; // T_High
-    let sig_995 = (std_dev * 2.57583).round() as i64; // T_Thresh
-    let sig_990 = (std_dev * 2.32635).round() as i64; // T_Extend
-    let sig_900 = (std_dev * 1.64485).round() as i64; // T_Low
-    return (sig_998, sig_995, sig_990, sig_900)
+    // (T_High, T_Thresh, T_Extend, T_Low)
+    return ((std_dev * 2.87816).round() as i64, (std_dev * 2.57583).round() as i64, (std_dev * 2.32635).round() as i64, (std_dev * 1.64485).round() as i64)
 }
 
 // Even when the genome is 100 Billion the "K" should never exceed ~18 --> L/(4^K) < 5
