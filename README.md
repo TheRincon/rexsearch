@@ -1,4 +1,4 @@
-# rsearch
+# rexsearch
 Port of [vsearch](https://github.com/torognes/vsearch) into Rust
 
 The licensing applies from vsearch, since it is mostly a port. I intend no copyright or other infringment. All credit to Torbjørn Rognes (torognes), also took some code from rust::bio. Same applies, all credit to Johannes. And of course, [usearch](https://www.drive5.com/usearch/).
@@ -7,7 +7,7 @@ Rewriting vsearch with protein comparison and FOGSAA. I have a few ideas how to 
 
 ## Comments
 
-RSEARCH is nearing VSEARCH speed. It is 30% faster for one core, but overall 50% slower because I only use 1 core. This is also for simple tasks such as msking or filtering reads, not alignment. 
+REXSEARCH is nearing VSEARCH speed. It is 30% faster for one core, but overall 50% slower because I only use 1 core. This is also for simple tasks such as msking or filtering reads, not alignment. 
 
 Candidate tools:
 
