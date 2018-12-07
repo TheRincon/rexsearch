@@ -10,7 +10,7 @@ pub fn filter_fasta_n(file_path: &str) {
         if rec.seq().contains(&('N' as u8)) {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter_fasta_n");
         }
     }
 }
@@ -23,7 +23,7 @@ pub fn filter_fastq_n(file_path: &str) {
         if rec.seq().contains(&('N' as u8)) {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter_fastq_n");
         }
     }
 }
@@ -37,7 +37,7 @@ pub fn filter_fastq_count_n(file_path: &str, num: usize) {
         if rec.seq().iter().filter(|&n| *n == 'N' as u8).count() > num {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter_fastq_count_n");
         }
     }
 }
@@ -50,7 +50,7 @@ pub fn filter_fasta_count_n(file_path: &str, num: usize) {
         if rec.seq().iter().filter(|&n| *n == 'N' as u8).count() > num {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter_fastq_count_n");
         }
     }
 }
@@ -63,7 +63,7 @@ pub fn filter_fasta_max_len(file_path: &str, len: usize) {
         if rec.seq().len() > len {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter_fasta_max_len");
         }
     }
 }
@@ -76,7 +76,7 @@ pub fn filter_fastq_min_len(file_path: &str, len: usize) {
         if rec.seq().len() < len {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter_fastq_min_len");
         }
     }
 }
@@ -89,7 +89,7 @@ pub fn filter_fastq_max_quality(file_path: &str, qual: i64) {
         if rec.qual().iter().filter(|&&x| x > qual as u8 ).count() > 0 {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter_fastq_max_quality");
         }
     }
 }
@@ -102,7 +102,7 @@ pub fn filter_fastq_min_quality(file_path: &str, qual: char) {
         if rec.qual().iter().filter(|&&x| x > qual as u8 ).count() > 0 {
                 continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter_fastq_min_quality");
         }
     }
 }
@@ -115,7 +115,7 @@ pub fn filter_both_fasta(file_path: &str) {
         if rec.seq().iter().filter(|&n| *n == 'N' as u8).count() > 0 || rec.seq().iter().filter(|&n| *n == 'a' as u8 || *n == 't' as u8 || *n == 'g' as u8 || *n == 'c' as u8).count() > 0 {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter both_fasta");
         }
     }
 }
@@ -128,7 +128,7 @@ pub fn filter_both_fastq(file_path: &str) {
         if rec.seq().iter().filter(|&n| *n == 'N' as u8).count() > 0 || rec.seq().iter().filter(|&n| *n == 'a' as u8 || *n == 't' as u8 || *n == 'g' as u8 || *n == 'c' as u8).count() > 0 {
             continue
         } else {
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write record in filter both_fastq");
         }
     }
 }

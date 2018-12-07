@@ -28,7 +28,6 @@ fn mask_helper(nts: &str) -> String {
         }
     }
     y
-
 }
 
 pub fn fast_mask(name: &str) {
@@ -39,12 +38,12 @@ pub fn fast_mask(name: &str) {
     for line in filee.lines() {
         let mut l = line.unwrap();
         if l.find(">") >= Some(0) {
-            writer.write(&l.as_bytes());
-            writer.write(&[10u8]);
+            writer.write(&l.as_bytes()).expect("Cannot write fast_mask header as bytes");
+            writer.write(&[10u8]).expect("Cannot write fast_mask newline as byte");
         } else {
             let x = mask_helper(&mut l);
-            writer.write(&x.as_bytes());
-            writer.write(&[10u8]);
+            writer.write(&x.as_bytes()).expect("Cannot write fast_mask line as bytes");
+            writer.write(&[10u8]).expect("Cannot write fast_mask newline as byte");
         }
     }
 }

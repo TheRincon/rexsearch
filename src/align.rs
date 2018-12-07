@@ -66,7 +66,7 @@ pub fn nt_identical(a: &char, b: &char) {
 
 #[inline]
 pub fn finishop(cigarendp: &mut [char], op: &char, count: &i64) {
-    if op && count {
+    if op && &(count as char) {
         *--*cigarendp = *op;
         if count > 1 {
 
@@ -212,7 +212,7 @@ pub fn nw_align(dseq: &str,
                 e = h_e;
             }
 
-            &(hep+1) = e;   // syntax not familiar
+            &(hep+1) = &e;   // syntax not familiar
             h = n;
             hep += 2;
         }

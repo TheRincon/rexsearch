@@ -12,7 +12,7 @@ pub fn trunc_fasta(file_path: &str, threshold: usize) {
         } else {
             let str_slice = &rec.seq_string()[..threshold];
             rec.update_seq(str_slice);
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write updated seq in trunc_fasta");
         }
     }
 }
@@ -27,7 +27,7 @@ pub fn trunc_fastq(file_path: &str, threshold: usize) {
         } else {
             let str_slice = &rec.seq_string()[..threshold];
             rec.update_seq(str_slice);
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write updated seq in trunc fastq");
         }
     }
 }
@@ -46,7 +46,7 @@ pub fn trunc_last_fastq(file_path: &str, threshold: usize) {
             let str_slice_first = &rec.seq_string().chars().rev().skip(threshold).collect::<String>();
             let str_slice = str_slice_first.chars().rev().collect::<String>();
             rec.update_seq(&str_slice);
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write updated seq in trunc_last_fastq");
         }
     }
 }
@@ -65,7 +65,7 @@ pub fn trunc_last_fasta(file_path: &str, threshold: usize) {
             let str_slice_first = &rec.seq_string().chars().rev().skip(threshold).collect::<String>();
             let str_slice = str_slice_first.chars().rev().collect::<String>();
             rec.update_seq(&str_slice);
-            writer.write_record(&mut rec);
+            writer.write_record(&mut rec).expect("Cannot write updated seq in trunc_last_fastq");
         }
     }
 }
