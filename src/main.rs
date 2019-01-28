@@ -71,6 +71,16 @@ use io::fasta;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+      let c = cupid::master();
+    println!("{:#?}", c);
+    if let Some(c) = c {
+        if c.sse4_2() {
+            println!("SSE 4.2 Available");
+        }
+        if c.avx2() {
+            println!("AVX2 Available")
+        }
+    }
     // let yaml = load_yaml!("cli.yml");
     // let matches = App::from_yaml(yaml).get_matches();
     // fastx_utils::write_fasta_new("/Users/daniel/Downloads/samp.fasta".to_string());
@@ -88,15 +98,4 @@ fn main() {
     // let mut p = String::from("ATTAAAG");
     // let c = window_masker::rev_comp(&mut p);
     // println!("{:?}", c);
-
-    let c = cupid::master();
-    println!("{:#?}", c);
-    if let Some(c) = c {
-        if c.sse4_2() {
-            println!("SSE 4.2 Available");
-        }
-        if c.avx2() {
-            println!("AVX2 Available")
-        }
-    }
 }
